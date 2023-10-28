@@ -1,21 +1,27 @@
+#include <list>
+
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> ppp = {1, 2, 3, 4};
-    s21::list<int> qqq(ppp);
+    s21::list<int> ppp = {1, 2, 3, 4, 5, 3, -3, 0, 34, 324, 64, -1234, 45};
+    s21::list<int> qqq = {1};
+
+    auto it = ppp.begin();
+    it += 2;
+    std::cout << *(it) << std::endl;
+
     // const s21::list<int> lll = {1, 2, 2, 3};
     // auto it = lll.begin();
-    ppp[0] = 3;
-    ppp[1] = 3;
-    qqq.print_list();
-    ppp.print_list();
-    s21::list<int>::iterator it = ppp.begin();
+    // ppp[0] = 3;
+    // ppp[1] = 3;
+    // qqq.print_list();
+    // ppp.print_list();
+    // s21::list<int>::iterator it = ppp.begin();
     // list.push_back("a");
     // list.push_back("b");
     // list.push_back("c");
     // list.print_list();
 
-    std::cout << std::endl << ppp.max_size() << std::endl;
     // std::cout << "num of elem " << list.size() << std::endl;
 
     // auto it = list.begin();
