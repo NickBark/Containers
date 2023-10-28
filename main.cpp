@@ -3,12 +3,26 @@
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> ppp = {1, 2, 3, 4, 5, 3, -3, 0, 34, 324, 64, -1234, 45};
-    s21::list<int> qqq = {1};
+    s21::list<int> ppp = {-1, 2, 3, 4, 50, 6, 7, 8, 9, -10};
 
-    auto it = ppp.begin();
-    it += 2;
-    std::cout << *(it) << std::endl;
+    ppp.reverse();
+    // auto it = ppp.begin();
+
+    ppp.print_list();
+    // std::cout << ppp.size() << std::endl;
+    // try {
+    //     std::reverse(ppp.begin(), ppp.end());
+    //     // it += 2;
+    //     // std::cout << *(it) << std::endl;
+    //     // it -= 2;
+    //     // std::cout << *(it) << std::endl;
+
+    //     // ppp.sort();
+
+    //     ppp.print_list();
+    // } catch (std::exception& e) {
+    //     std::cout << e.what() << std::endl;
+    // }
 
     // const s21::list<int> lll = {1, 2, 2, 3};
     // auto it = lll.begin();

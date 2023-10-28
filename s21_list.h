@@ -27,7 +27,9 @@ class list {
     void pop_back();
     void pop_front();
     void swap(list& other);
-    void sort() { std::sort(begin(), end()); }
+    void reverse();
+    void clear();
+    // void sort() { std::sort(begin(), end()); }
 
     void print_list();
     bool empty() const;
@@ -73,14 +75,18 @@ class list {
         ListIterator(Node<value_type>* it) : cur(it) {}
         reference operator*() const { return cur->data; }
         ListIterator& operator++() {
-            if (!cur->pNext) throw std::out_of_range("End of list");
+            // if (!cur->pNext) throw std::out_of_range("End of list");
             cur = cur->pNext;
             return *this;
         }
 
         ListIterator operator++(int) {
             ListIterator<value_type> it = *this;
-            if (!cur->pNext) throw std::out_of_range("End of list");
+            // if (!cur->pNext) {
+            //     cur = cur->pNext;
+            //     return it;
+            //     throw std::out_of_range("End of list");
+            // }
             cur = cur->pNext;
             return it;
         }
@@ -93,6 +99,27 @@ class list {
         ListIterator operator--(int) {
             ListIterator<value_type> it = *this;
             cur = cur->pPrev;
+            return it;
+        }
+
+        ListIterator& operator-=(size_type n) {
+            for (size_type i = 0; i < n; ++i) {
+                if (!cur->pPrev) {
+                    throw std::out_of_range("End of list");
+                }
+                cur = cur->pPrev;
+            }
+            return *this;
+        }
+
+        ListIterator operator-(size_type n) const {
+            ListIterator<value_type> it = *this;
+            for (size_type i = 0; i < n; ++i) {
+                if (!it.cur->pPrev) {
+                    throw std::out_of_range("End of list");
+                }
+                it.cur = it.cur->pPrev;
+            }
             return it;
         }
 
@@ -156,6 +183,29 @@ class list {
 };
 
 template <typename value_type>
+void list<value_type>::reverse() {
+    iterator itB = begin();
+    iterator itE = begin();
+    itE += sizeOfList - 1;
+    for (size_type i = 0; i < sizeOfList / 2; i++) {
+        std::swap(*itB++, *itE--);
+    }
+}
+
+template <typename value_type>
+void list<value_type>::clear() {
+    Node<value_type>* cur = head;
+    for (size_type i = 0; i < sizeOfList; i++) {
+        cur = head->pNext;
+        delete head;
+        head = cur;
+    }
+    sizeOfList = 0;
+    head = nullptr;
+    tail = nullptr;
+}
+
+template <typename value_type>
 typename list<value_type>::size_type list<value_type>::max_size() const {
     return std::numeric_limits<size_type>::max();
 }
@@ -177,15 +227,7 @@ list<value_type>::list() : sizeOfList(0), head(nullptr), tail(nullptr) {}
 
 template <typename value_type>
 list<value_type>::~list() {
-    Node<value_type>* cur = head;
-    for (size_type i = 0; i < sizeOfList; i++) {
-        cur = head->pNext;
-        delete head;
-        head = cur;
-    }
-    sizeOfList = 0;
-    head = nullptr;
-    tail = nullptr;
+    clear();
 }
 
 template <typename value_type>
