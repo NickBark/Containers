@@ -3,9 +3,12 @@
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> ppp = {-1, 2, 3, 4, 50, 6, 7, 8, 9, -10};
+    s21::list<int> ppp = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-    ppp.reverse();
+    // ppp.reverse();
+    auto it = ppp.begin();
+    it += 3;
+    ppp.insert(it, 21);
     // auto it = ppp.begin();
 
     ppp.print_list();

@@ -29,6 +29,7 @@ class list {
     void swap(list& other);
     void reverse();
     void clear();
+
     // void sort() { std::sort(begin(), end()); }
 
     void print_list();
@@ -70,6 +71,8 @@ class list {
             cur = other.cur;
             return *this;
         }
+
+        friend class list;
 
        public:
         ListIterator(Node<value_type>* it) : cur(it) {}
@@ -161,6 +164,8 @@ class list {
     using iterator = ListIterator<T>;
     using const_iterator = ListConstIterator<T>;
 
+    iterator insert(iterator pos, const_reference value);
+
     iterator begin() {
         if (!head) throw std::out_of_range("The list has no elements");
         return ListIterator(head);
@@ -181,6 +186,24 @@ class list {
         return ListIterator(tail->pNext);
     }
 };
+
+template <typename value_type>
+typename list<value_type>::iterator list<value_type>::insert(
+    iterator pos, const_reference value) {
+    Node<value_type>* newNode = new Node<value_type>(value);
+    if (pos.cur == head) {
+        newNode->pNext = head;
+        head->pPrev = newNode;
+        head = newNode;
+    } else {
+        newNode->pNext = pos.cur;
+        newNode->pPrev = pos.cur->pPrev;
+        pos.cur->pPrev->pNext = newNode;
+        pos.cur->pPrev = newNode;
+    }
+
+    return iterator(newNode);
+}
 
 template <typename value_type>
 void list<value_type>::reverse() {
