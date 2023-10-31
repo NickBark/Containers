@@ -29,6 +29,7 @@ class list {
     void swap(list& other);
     void reverse();
     void clear();
+    void unique();
 
     // void sort() { std::sort(begin(), end()); }
 
@@ -67,10 +68,10 @@ class list {
        protected:
         Node<value_type>* cur;
 
-        ListIterator& operator=(ListIterator& other) {
-            cur = other.cur;
-            return *this;
-        }
+        // ListIterator& operator=(ListIterator& other) {
+        //     cur = other.cur;
+        //     return *this;
+        // }
 
         friend class list;
 
@@ -157,6 +158,9 @@ class list {
         ListConstIterator(const Node<value_type>* it)
             : ListIterator<value_type>(const_cast<Node<T>*>(it)) {}
 
+        ListConstIterator(const ListIterator<value_type>& other)
+            : ListIterator<value_type>(other) {}
+
         const_reference operator*() const { return this->cur->data; }
     };
 
@@ -165,27 +169,90 @@ class list {
     using const_iterator = ListConstIterator<T>;
 
     iterator insert(iterator pos, const_reference value);
-
-    iterator begin() {
-        if (!head) throw std::out_of_range("The list has no elements");
-        return ListIterator(head);
-    }
+    void erase(iterator pos);
+    void splice(const_iterator pos, list& other);
 
     const_iterator begin() const {
         if (!head) throw std::out_of_range("The list has no elements");
-        return ListConstIterator(head);
+        return const_iterator(head);
     }
 
-    iterator end() {
-        if (!tail) throw std::out_of_range("The list has no elements");
-        return ListIterator(tail->pNext);
+    iterator begin() {
+        if (!head) throw std::out_of_range("The list has no elements");
+        return iterator(head);
     }
 
     const_iterator end() const {
         if (!tail) throw std::out_of_range("The list has no elements");
-        return ListIterator(tail->pNext);
+        return const_iterator(tail->pNext);
+    }
+
+    iterator end() {
+        if (!tail) throw std::out_of_range("The list has no elements");
+        return iterator(tail->pNext);
     }
 };
+
+template <typename value_type>
+void list<value_type>::unique() {
+    iterator it1 = begin();
+    iterator it2 = begin() + 1;
+    while (1) {
+        if (*it1 == *it2) {
+            iterator rem(it2++);
+            erase(rem);
+        }
+        if (it2.cur->pNext) {
+            it1++;
+            it2++;
+        } else {
+            break;
+        }
+    }
+}
+
+template <typename value_type>
+void list<value_type>::erase(iterator pos) {
+    if (!head || !pos.cur) throw std::out_of_range("End of list");
+    if (pos.cur == tail) {
+        pos.cur->pPrev->pNext = nullptr;
+        pos.cur->pNext->pPrev = pos.cur->pPrev;
+    } else if (pos.cur == head) {
+        pos.cur->pPrev->pNext = pos.cur->pNext;
+        pos.cur->pNext->pPrev = nullptr;
+    } else {
+        pos.cur->pPrev->pNext = pos.cur->pNext;
+        pos.cur->pNext->pPrev = pos.cur->pPrev;
+    }
+    sizeOfList--;
+    delete pos.cur;
+}
+
+template <typename value_type>
+void list<value_type>::splice(const_iterator pos, list& other) {
+    if ((!other.head && !head) || &other == this) return;
+    if (!pos.cur) pos.cur = tail;
+
+    if (pos.cur == head) {
+        other.tail->pNext = head;
+        head->pPrev = other.tail;
+        head = other.head;
+    } else if (pos.cur == tail) {
+        other.head->pPrev = tail;
+        tail->pNext = other.head;
+        tail = other.tail;
+    } else {
+        iterator current = pos;
+        other.tail->pNext = current.cur;
+        other.head->pPrev = current.cur->pPrev;
+        current.cur->pPrev->pNext = other.head;
+        current.cur->pPrev = other.tail;
+    }
+    sizeOfList += other.sizeOfList;
+    other.head = nullptr;
+    other.tail = nullptr;
+    other.sizeOfList = 0;
+}
 
 template <typename value_type>
 typename list<value_type>::iterator list<value_type>::insert(
@@ -201,7 +268,7 @@ typename list<value_type>::iterator list<value_type>::insert(
         pos.cur->pPrev->pNext = newNode;
         pos.cur->pPrev = newNode;
     }
-
+    sizeOfList++;
     return iterator(newNode);
 }
 

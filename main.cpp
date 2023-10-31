@@ -3,15 +3,35 @@
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> ppp = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    s21::list<int> ppp = {1, 1, 2, 2, 3, 3, 1, 2, 2, 3, 4, 4};
+    // s21::list<int> qqq = {4, 5, 6};
+    // auto its = ppp.begin();
+    // its++;
 
-    // ppp.reverse();
+    // ppp.splice(its, qqq);
+    ppp.unique();
+
     auto it = ppp.begin();
-    it += 3;
-    ppp.insert(it, 21);
-    // auto it = ppp.begin();
 
-    ppp.print_list();
+    // it++;
+    // it++;
+    // it--;
+    // auto it2 = ppp.begin();
+    // ppp.insert(it, 21);
+    for (size_t i = 0; i < ppp.size(); i++) {
+        std::cout << *it++ << std::endl;
+    }
+    std::cout << "------" << std::endl;
+    // for (size_t i = 0; i < qqq.size(); i++) {
+    //     std::cout << *itq++ << std::endl;
+    // }
+    // // ppp.print_list();
+    // ppp.erase(it);
+    // it2 = ppp.begin();
+    // for (size_t i = 0; i < ppp.size(); i++) {
+    //     std::cout << *it2++ << std::endl;
+    // }
+    // ppp.print_list();
     // std::cout << ppp.size() << std::endl;
     // try {
     //     std::reverse(ppp.begin(), ppp.end());
