@@ -197,18 +197,17 @@ template <typename value_type>
 void list<value_type>::unique() {
     iterator it1 = begin();
     iterator it2 = begin() + 1;
-    while (1) {
+
+    while (it2.cur->pNext) {
         if (*it1 == *it2) {
             iterator rem(it2++);
             erase(rem);
-        }
-        if (it2.cur->pNext) {
+        } else {
             it1++;
             it2++;
-        } else {
-            break;
         }
     }
+    if (*it1 == *it2) erase(it1);
 }
 
 template <typename value_type>
