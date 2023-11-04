@@ -1,27 +1,34 @@
+#include <algorithm>
+#include <iostream>
 #include <list>
 
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> ppp = {1, 1, 2, 2, 3, 3, 1, 2, 2, 3, 4, 4};
+    s21::list<int> qqq = {1, 2, 3};
+    s21::list<int> ppp = {4, 5, 6};
+    ppp.merge(qqq);
+    ppp.print_list();
+    // ppp.print_list();
+    // std::cout << *it1 << " " << *it2 << std::endl;
     // s21::list<int> qqq = {4, 5, 6};
     // auto its = ppp.begin();
     // its++;
 
     // ppp.splice(its, qqq);
-    ppp.unique();
+    // ppp.unique();
 
-    auto it = ppp.begin();
+    // auto it = ppp.begin();
 
     // it++;
     // it++;
     // it--;
     // auto it2 = ppp.begin();
     // ppp.insert(it, 21);
-    for (size_t i = 0; i < ppp.size(); i++) {
-        std::cout << *it++ << std::endl;
-    }
-    std::cout << "------" << std::endl;
+    // for (size_t i = 0; i < ppp.size(); i++) {
+    //     std::cout << *it++ << std::endl;
+    // }
+    // std::cout << "------" << std::endl;
     // for (size_t i = 0; i < qqq.size(); i++) {
     //     std::cout << *itq++ << std::endl;
     // }

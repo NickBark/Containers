@@ -30,8 +30,8 @@ class list {
     void reverse();
     void clear();
     void unique();
-
-    // void sort() { std::sort(begin(), end()); }
+    void sort();
+    void merge(list& other);
 
     void print_list();
     bool empty() const;
@@ -192,6 +192,56 @@ class list {
         return iterator(tail->pNext);
     }
 };
+
+template <typename value_type>
+void list<value_type>::merge(list& other) {
+    splice(this->begin(), other);
+    sort();
+}
+
+template <typename value_type>
+void list<value_type>::sort() {
+    iterator it1 = begin();
+    iterator it2 = begin();
+    iterator tmp = nullptr;
+    it2++;
+    int exit = 1;
+
+    while (exit) {
+        exit = 0;
+        it1 = begin();
+        it2 = begin();
+        if (it2.cur->pNext) it2++;
+
+        for (size_type i = 0; i < sizeOfList - 1; i++) {
+            if (*it1 > *it2) {
+                if (it1.cur->pPrev) {
+                    it1.cur->pPrev->pNext = it2.cur;
+                } else {
+                    head = it2.cur;
+                }
+                if (it2.cur->pNext) {
+                    it2.cur->pNext->pPrev = it1.cur;
+                } else {
+                    tail = it1.cur;
+                }
+                it1.cur->pNext = it2.cur->pNext;
+                it2.cur->pPrev = it1.cur->pPrev;
+                it1.cur->pPrev = it2.cur;
+                it2.cur->pNext = it1.cur;
+                head->pPrev = nullptr;
+                tail->pNext = nullptr;
+                exit = 1;
+                tmp = it1;
+                it1 = it2;
+                it2 = tmp;
+            }
+
+            it1++;
+            if (it2.cur->pNext) it2++;
+        }
+    }
+}
 
 template <typename value_type>
 void list<value_type>::unique() {
