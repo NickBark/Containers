@@ -10,14 +10,20 @@ class map {
     using key_type = Key;
     using mapped_type = T;
     using value_type = std::pair<const key_type, mapped_type>;
-    using reference = value_type &;
-    using const_reference = const value_type &;
+    using reference = value_type&;
+    using const_reference = const value_type&;
     using size_type = size_t;
 
     template <typename key_type, typename mapped_type>
     class Node {
        public:
+        key_type key;
+        mapped_type data;
+        Node* left;
+        Node* rigth;
     };
+
+    Node<key_type, mapped_type>* root;
 };
 }  // namespace s21
 
