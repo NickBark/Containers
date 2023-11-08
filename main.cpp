@@ -1,14 +1,23 @@
 #include <algorithm>
 #include <iostream>
 #include <list>
+#include <map>
 
 #include "s21_containers.h"
 
 int main() {
-    s21::list<int> qqq = {1, 2, 3};
-    s21::list<int> ppp = {4, 5, 6};
-    ppp.merge(qqq);
-    ppp.print_list();
+    s21::map<std::string, int> map1;
+    map1.insert({"abc", 21});
+    s21::map<std::string, int>::iterator it = map1.begin();
+
+    std::cout << (*it).second << std::endl;
+
+    // for (int i = 0; i < mmm.size(); i++) {
+    //     std::cout << it->second << std::endl;
+    //     it++;
+    // }
+    // ppp.merge(qqq);
+    // ppp.print_list();
     // ppp.print_list();
     // std::cout << *it1 << " " << *it2 << std::endl;
     // s21::list<int> qqq = {4, 5, 6};
