@@ -23,10 +23,10 @@ class map {
         value_type data_;
         Node* left_;
         Node* right_;
-        Node* parrent_;
+        Node* parent_;
 
         inline Node(const value_type& data) noexcept
-            : data_(data), left_(nullptr), right_(nullptr), parrent_(nullptr) {}
+            : data_(data), left_(nullptr), right_(nullptr), parent_(nullptr) {}
     };
     Node<key_type, mapped_type>* root;
     size_type size_;
@@ -57,7 +57,7 @@ class map {
                     current_ = current_->left_;
                 }
             } else {
-                if (current_->parrent_) current_ = current_->parrent_;
+                if (current_->parent_) current_ = current_->parent_;
                 // else
                 //     throw std::out_of_range("End of map");
             }
@@ -139,10 +139,10 @@ map<key_type, mapped_type>::insert(const value_type& value) {
     if (!duplicate) {
         if (value.first < parent->data_.first) {
             parent->left_ = newNode;
-            parent->left_->parrent_ = parent;
+            parent->left_->parent_ = parent;
         } else {
             parent->right_ = newNode;
-            parent->right_->parrent_ = parent;
+            parent->right_->parent_ = parent;
         }
         size_++;
     }
