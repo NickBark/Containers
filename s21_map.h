@@ -57,10 +57,9 @@ class map {
                     current_ = current_->left_;
                 }
             } else {
-                if (current_->parrent_)
-                    current_ = current_->parrent_;
-                else
-                    throw std::out_of_range("End of map");
+                if (current_->parrent_) current_ = current_->parrent_;
+                // else
+                //     throw std::out_of_range("End of map");
             }
             return *this;
         }
@@ -76,9 +75,18 @@ class map {
    public:
     using iterator = MapIterator<key_type, mapped_type>;
     iterator begin();
+    iterator end();
 
     std::pair<iterator, bool> insert(const value_type& value);
 };
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::iterator
+map<key_type, mapped_type>::end() {
+    Node<key_type, mapped_type>* cur = root;
+    while (cur->right_) cur = cur->right_;
+    return iterator(cur);
+}
 
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::iterator
@@ -104,13 +112,42 @@ void map<key_type, mapped_type>::clear() {}
 template <typename key_type, typename mapped_type>
 std::pair<typename map<key_type, mapped_type>::iterator, bool>
 map<key_type, mapped_type>::insert(const value_type& value) {
-    Node<key_type, mapped_type>* cur = root;
+    Node<key_type, mapped_type>* newNode =
+        new Node<key_type, mapped_type>(value);
     if (!root) {
-        root = new Node<key_type, mapped_type>(value);
+        root = newNode;
+        size_++;
+        return std::make_pair(iterator(root), true);
     }
 
-    size_++;
-    return std::pair<iterator, bool>(iterator(cur), true);
+    Node<key_type, mapped_type>* cur = root;
+    Node<key_type, mapped_type>* parent = nullptr;
+    bool duplicate = false;
+
+    while (cur) {
+        parent = cur;
+        if (value.first < cur->data_.first) {
+            cur = cur->left_;
+        } else if (value.first > cur->data_.first) {
+            cur = cur->right_;
+        } else {
+            duplicate = true;
+            break;
+        }
+    }
+
+    if (!duplicate) {
+        if (value.first < parent->data_.first) {
+            parent->left_ = newNode;
+            parent->left_->parrent_ = parent;
+        } else {
+            parent->right_ = newNode;
+            parent->right_->parrent_ = parent;
+        }
+        size_++;
+    }
+
+    return std::make_pair(iterator(newNode), !duplicate);
 }
 
 }  // namespace s21

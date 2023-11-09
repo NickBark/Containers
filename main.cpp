@@ -5,17 +5,32 @@
 
 #include "s21_containers.h"
 
+// #include <cstddef>
+
+// template <typename T, typename U>
+// void copy_n(T* dst, const U* src, size_t count) {
+//     for (size_t i = 0; i < count; i++) {
+//         dst[i] = static_cast<T>(src[i]);
+//     }
+// }
+
 int main() {
+    // int ints[] = {1, 2, 3, 4};
+    // double doubles[4] = {};
+    // copy_n(doubles, ints, 4);
+    // for (size_t i = 0; i < 4; i++) {
+    //     std::cout << doubles[i] << " ";
+    // }
+
     s21::map<std::string, int> map1;
-    map1.insert({"abc", 21});
+    map1.insert({"a", 21});
+    map1.insert({"x", 42});
     s21::map<std::string, int>::iterator it = map1.begin();
 
-    std::cout << (*it).second << std::endl;
-
-    // for (int i = 0; i < mmm.size(); i++) {
-    //     std::cout << it->second << std::endl;
-    //     it++;
-    // }
+    for (int i = 0; i < map1.size(); i++) {
+        std::cout << (*it).second << std::endl;
+        ++it;
+    }
     // ppp.merge(qqq);
     // ppp.print_list();
     // ppp.print_list();
