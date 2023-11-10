@@ -23,14 +23,17 @@ int main() {
     // }
 
     s21::map<std::string, int> map1;
-    map1.insert({"a", 21});
-    map1.insert({"x", 42});
+    std::cout << map1.insert({"a", 11}).second << std::endl;
+    std::cout << map1.insert({"b", 22}).second << std::endl;
+    std::cout << map1.insert({"c", 33}).second << std::endl;
+    std::cout << map1.size() << std::endl << std::endl;
     s21::map<std::string, int>::iterator it = map1.begin();
-
-    for (int i = 0; i < map1.size(); i++) {
-        std::cout << (*it).second << std::endl;
-        ++it;
-    }
+    s21::map<std::string, int>::iterator endit = map1.end();
+    // it++;
+    // for (int i = 0; i < map1.size(); i++) {
+    while (it != endit) std::cout << (*it++).second << std::endl;
+    // ++it;
+    // }
     // ppp.merge(qqq);
     // ppp.print_list();
     // ppp.print_list();

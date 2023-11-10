@@ -49,7 +49,7 @@ class map {
        public:
         MapIterator(Node<key_type, mapped_type>* node) : current_(node) {}
         reference operator*() const noexcept { return current_->data_; }
-        MapIterator operator++(int) {}
+
         MapIterator operator++() {
             if (current_->right_) {
                 current_ = current_->right_;
@@ -58,10 +58,14 @@ class map {
                 }
             } else {
                 if (current_->parent_) current_ = current_->parent_;
-                // else
-                //     throw std::out_of_range("End of map");
             }
             return *this;
+        }
+
+        MapIterator operator++(int) {
+            MapIterator cur(*this);
+            ++(*this);
+            return cur;
         }
 
         bool operator==(const MapIterator& other) const noexcept {
