@@ -69,9 +69,33 @@ class map {
             return *this;
         }
 
+        MapIterator operator--() {
+            if (current_->left_) {
+                current_ = current_->left_;
+                while (current_->right_) {
+                    current_ = current_->right_;
+                }
+            } else {
+                if (current_->parent_ &&
+                    current_->parent_->data_ < current_->data_)
+                    current_ = current_->parent_;
+                else {
+                    current_ = nullptr;
+                }
+            }
+
+            return *this;
+        }
+
         MapIterator operator++(int) {
             MapIterator cur(*this);
             ++(*this);
+            return cur;
+        }
+
+        MapIterator operator--(int) {
+            MapIterator cur(*this);
+            --(*this);
             return cur;
         }
 
@@ -95,8 +119,6 @@ class map {
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::iterator
 map<key_type, mapped_type>::end() {
-    // Node<key_type, mapped_type>* cur = root;
-    // while (cur->right_) cur = cur->right_;
     return iterator(nullptr);
 }
 
