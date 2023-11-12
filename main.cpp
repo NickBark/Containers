@@ -22,27 +22,21 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
 
-    std::map<int, int> map1;
+    s21::map<int, int> map1;
     std::cout << map1.insert({1, 11}).second << std::endl;
     std::cout << map1.insert({2, 22}).second << std::endl;
     std::cout << map1.insert({3, 33}).second << std::endl;
-    std::cout << map1.size() << std::endl << std::endl;
-    std::map<int, int>::iterator it = map1.begin();
-    std::map<int, int>::iterator endit = map1.end();
-    // it++;
-    // for (int i = 0; i < map1.size(); i++) {
-    it++;
-    it++;
-    std::cout << it->second << std::endl;
-    it--;
-    std::cout << it->second << std::endl;
-    it--;
-    std::cout << it->second << std::endl;
-    it--;
-    std::cout << it->second << std::endl;
+    map1.insert(10, 20);
+    map1.insert_or_assign(10, 55);
 
-    // ++it;
-    // }
+    // std::cout << map1.at(10) << std::endl;
+
+    s21::map<int, int>::iterator it = map1.begin();
+
+    for (int i = 0; i < map1.size(); i++) {
+        std::cout << it->second << std::endl;
+        it++;
+    }
     // ppp.merge(qqq);
     // ppp.print_list();
     // ppp.print_list();

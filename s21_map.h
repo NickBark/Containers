@@ -39,6 +39,7 @@ class map {
     inline bool empty() const { return !size_; }
     inline size_type size() const { return size_; }
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
+    mapped_type& at(const key_type& key);
 
    private:
     template <typename key_type, typename mapped_type>
@@ -113,8 +114,23 @@ class map {
     iterator end();
 
     std::pair<iterator, bool> insert(const value_type& value);
-    std::pair<iterator, bool> insert(const Key& key, const T& obj);
+    std::pair<iterator, bool> insert(const key_type& key,
+                                     const mapped_type& obj);
+    std::pair<iterator, bool> insert_or_assign(const key_type& key,
+                                               const mapped_type& obj);
 };
+
+template <typename key_type, typename mapped_type>
+mapped_type& map<key_type, mapped_type>::at(const key_type& key) {
+    Node<key_type, mapped_type>* current = root;
+    while (current && current->data_.first != key) {
+        if (key < current->data_.first)
+            current = current->left_;
+        else if (key > current->data_.first)
+            current = current->right_;
+    }
+    return current ? current->data_.second : throw std::out_of_range("map::at");
+}
 
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::iterator
@@ -188,7 +204,18 @@ template <typename key_type, typename mapped_type>
 std::pair<typename map<key_type, mapped_type>::iterator, bool>
 map<key_type, mapped_type>::insert(const key_type& key,
                                    const mapped_type& obj) {
-    return nullptr;
+    return insert(std::make_pair(key, obj));
+}
+
+template <typename key_type, typename mapped_type>
+std::pair<typename map<key_type, mapped_type>::iterator, bool>
+map<key_type, mapped_type>::insert_or_assign(const key_type& key,
+                                             const mapped_type& obj) {
+    std::pair<iterator, bool> result = insert(key, obj);
+    if (!result.second) {
+        at(key) = obj;
+    }
+    return result;
 }
 
 }  // namespace s21
