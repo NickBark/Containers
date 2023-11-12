@@ -22,16 +22,22 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
 
-    s21::map<std::string, int> map1;
-    std::cout << map1.insert({"a", 11}).second << std::endl;
-    std::cout << map1.insert({"b", 22}).second << std::endl;
-    std::cout << map1.insert({"c", 33}).second << std::endl;
+    s21::map<int, int> map1;
+    std::cout << map1.insert({1, 11}).second << std::endl;
+    std::cout << map1.insert({2, 22}).second << std::endl;
+    std::cout << map1.insert({3, 33}).second << std::endl;
     std::cout << map1.size() << std::endl << std::endl;
-    s21::map<std::string, int>::iterator it = map1.begin();
-    s21::map<std::string, int>::iterator endit = map1.end();
+    s21::map<int, int>::iterator it = map1.begin();
+    s21::map<int, int>::iterator endit = map1.end();
     // it++;
     // for (int i = 0; i < map1.size(); i++) {
-    while (it != endit) std::cout << (*it++).second << std::endl;
+
+    it->second = 3;
+    std::cout << it->second << std::endl;
+    // while (it != endit) {
+    //     it->data_
+    //     it++;
+    // }
     // ++it;
     // }
     // ppp.merge(qqq);

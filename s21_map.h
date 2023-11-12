@@ -49,6 +49,7 @@ class map {
        public:
         MapIterator(Node<key_type, mapped_type>* node) : current_(node) {}
         reference operator*() const noexcept { return current_->data_; }
+        value_type* operator->() const noexcept { return &(current_->data_); }
 
         MapIterator operator++() {
             if (current_->right_) {
@@ -57,8 +58,13 @@ class map {
                     current_ = current_->left_;
                 }
             } else {
-                if (current_->parent_) current_ = current_->parent_;
+                if (current_->parent_ &&
+                    current_->parent_->data_ > current_->data_)
+                    current_ = current_->parent_;
+                else
+                    return MapIterator(nullptr);
             }
+
             return *this;
         }
 
@@ -82,14 +88,15 @@ class map {
     iterator end();
 
     std::pair<iterator, bool> insert(const value_type& value);
+    std::pair<iterator, bool> insert(const Key& key, const T& obj);
 };
 
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::iterator
 map<key_type, mapped_type>::end() {
-    Node<key_type, mapped_type>* cur = root;
-    while (cur->right_) cur = cur->right_;
-    return iterator(cur);
+    // Node<key_type, mapped_type>* cur = root;
+    // while (cur->right_) cur = cur->right_;
+    return iterator(nullptr);
 }
 
 template <typename key_type, typename mapped_type>
@@ -135,23 +142,30 @@ map<key_type, mapped_type>::insert(const value_type& value) {
         } else if (value.first > cur->data_.first) {
             cur = cur->right_;
         } else {
+            delete newNode;
             duplicate = true;
             break;
         }
     }
 
     if (!duplicate) {
+        newNode->parent_ = parent;
         if (value.first < parent->data_.first) {
             parent->left_ = newNode;
-            parent->left_->parent_ = parent;
         } else {
             parent->right_ = newNode;
-            parent->right_->parent_ = parent;
         }
         size_++;
     }
 
     return std::make_pair(iterator(newNode), !duplicate);
+}
+
+template <typename key_type, typename mapped_type>
+std::pair<typename map<key_type, mapped_type>::iterator, bool>
+map<key_type, mapped_type>::insert(const key_type& key,
+                                   const mapped_type& obj) {
+    return nullptr;
 }
 
 }  // namespace s21
