@@ -31,13 +31,10 @@ int main() {
     s21::map<int, int>::iterator endit = map1.end();
     // it++;
     // for (int i = 0; i < map1.size(); i++) {
-
-    it->second = 3;
-    std::cout << it->second << std::endl;
-    // while (it != endit) {
-    //     it->data_
-    //     it++;
-    // }
+    while (it != endit) {
+        std::cout << it->second << std::endl;
+        it++;
+    }
     // ++it;
     // }
     // ppp.merge(qqq);

@@ -61,8 +61,9 @@ class map {
                 if (current_->parent_ &&
                     current_->parent_->data_ > current_->data_)
                     current_ = current_->parent_;
-                else
-                    return MapIterator(nullptr);
+                else {
+                    current_ = nullptr;
+                }
             }
 
             return *this;
