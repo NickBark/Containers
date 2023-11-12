@@ -118,6 +118,8 @@ class map {
                                      const mapped_type& obj);
     std::pair<iterator, bool> insert_or_assign(const key_type& key,
                                                const mapped_type& obj);
+
+    mapped_type& operator[](const key_type& key) { return at(key); }
 };
 
 template <typename key_type, typename mapped_type>

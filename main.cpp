@@ -29,7 +29,7 @@ int main() {
     map1.insert(10, 20);
     map1.insert_or_assign(10, 55);
 
-    // std::cout << map1.at(10) << std::endl;
+    std::cout << "--->" << map1.at(10) << std::endl;
 
     s21::map<int, int>::iterator it = map1.begin();
 
