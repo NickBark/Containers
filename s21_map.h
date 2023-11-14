@@ -34,12 +34,14 @@ class map {
    public:
     map();
     map(std::initializer_list<value_type> const& items);
+    map(const map& m);
 
     void clear();
     inline bool empty() const { return !size_; }
     inline size_type size() const { return size_; }
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
     mapped_type& at(const key_type& key);
+    void copyNode(const Node<key_type, mapped_type>* src);
 
    private:
     template <typename key_type, typename mapped_type>
@@ -123,6 +125,17 @@ class map {
 };
 
 template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::copyNode(
+    const Node<key_type, mapped_type>* src) {
+    if (src) {
+        insert(src->data_.first, src->data_.second);
+        size_++;
+        copyNode(src->left_);
+        copyNode(src->right_);
+    }
+}
+
+template <typename key_type, typename mapped_type>
 mapped_type& map<key_type, mapped_type>::at(const key_type& key) {
     Node<key_type, mapped_type>* current = root;
     while (current && current->data_.first != key) {
@@ -149,17 +162,20 @@ map<key_type, mapped_type>::begin() {
 }
 
 template <typename key_type, typename mapped_type>
+map<key_type, mapped_type>::map(const map& m) : root(nullptr) {
+    copyNode(m.root);
+}
+
+template <typename key_type, typename mapped_type>
 inline map<key_type, mapped_type>::map() : root(nullptr), size_(0) {}
 
 template <typename key_type, typename mapped_type>
 map<key_type, mapped_type>::map(std::initializer_list<value_type> const& items)
     : root(nullptr), size_(0) {
     for (const_reference item : items) {
+        insert(item.first, item.second);
     }
 }
-
-template <typename key_type, typename mapped_type>
-void map<key_type, mapped_type>::clear() {}
 
 template <typename key_type, typename mapped_type>
 std::pair<typename map<key_type, mapped_type>::iterator, bool>
@@ -219,6 +235,9 @@ map<key_type, mapped_type>::insert_or_assign(const key_type& key,
     }
     return result;
 }
+
+template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::clear() {}
 
 }  // namespace s21
 

@@ -22,21 +22,28 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
 
-    s21::map<int, int> map1;
-    std::cout << map1.insert({1, 11}).second << std::endl;
-    std::cout << map1.insert({2, 22}).second << std::endl;
-    std::cout << map1.insert({3, 33}).second << std::endl;
-    map1.insert(10, 20);
-    map1.insert_or_assign(10, 55);
+    s21::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33}};
+    s21::map<int, int> map2(map1);
 
-    std::cout << "--->" << map1[10] << std::endl;
-
-    s21::map<int, int>::iterator it = map1.begin();
-
-    for (int i = 0; i < map1.size(); i++) {
+    s21::map<int, int>::iterator it = map2.begin();
+    while (it != map2.end()) {
         std::cout << it->second << std::endl;
         it++;
     }
+    // std::cout << map1.insert({1, 11}).second << std::endl;
+    // std::cout << map1.insert({2, 22}).second << std::endl;
+    // std::cout << map1.insert({3, 33}).second << std::endl;
+    // map1.insert(10, 20);
+    // map1.insert_or_assign(10, 55);
+
+    // std::cout << "--->" << map1[10] << std::endl;
+
+    // s21::map<int, int>::iterator it = map1.begin();
+
+    // for (int i = 0; i < map1.size(); i++) {
+    //     std::cout << it->second << std::endl;
+    //     it++;
+    // }
     // ppp.merge(qqq);
     // ppp.print_list();
     // ppp.print_list();
