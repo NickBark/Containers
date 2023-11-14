@@ -35,6 +35,10 @@ class map {
     map();
     map(std::initializer_list<value_type> const& items);
     map(const map& m);
+    map(map&& m);
+    ~map();
+    map& operator=(const map& m);
+    map& operator=(map&& m);
 
     void clear();
     inline bool empty() const { return !size_; }
@@ -42,6 +46,8 @@ class map {
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
     mapped_type& at(const key_type& key);
     void copyNode(const Node<key_type, mapped_type>* src);
+    void deleteNode(Node<key_type, mapped_type>* node);
+    void swap(map& other);
 
    private:
     template <typename key_type, typename mapped_type>
@@ -125,6 +131,47 @@ class map {
 };
 
 template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::swap(map& other) {
+    std::swap(root, other.root);
+    std::swap(size_, other.size_);
+}
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::map& map<key_type, mapped_type>::operator=(
+    const map& m) {
+    if (this != &m) {
+        map<key_type, mapped_type> tmp(m);
+        swap(tmp);
+    }
+    return *this;
+}
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::map& map<key_type, mapped_type>::operator=(
+    map&& m) {
+    if (this != &m) {
+        map<key_type, mapped_type> tmp(std::move(m));
+        swap(tmp);
+    }
+    return *this;
+}
+
+template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::deleteNode(Node<key_type, mapped_type>* node) {
+    if (node) {
+        deleteNode(node->left_);
+        deleteNode(node->right_);
+        delete node;
+    }
+}
+
+template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::clear() {
+    deleteNode(root);
+    size_ = 0;
+}
+
+template <typename key_type, typename mapped_type>
 void map<key_type, mapped_type>::copyNode(
     const Node<key_type, mapped_type>* src) {
     if (src) {
@@ -165,6 +212,17 @@ map<key_type, mapped_type>::begin() {
 template <typename key_type, typename mapped_type>
 map<key_type, mapped_type>::map(const map& m) : root(nullptr) {
     copyNode(m.root);
+}
+
+template <typename key_type, typename mapped_type>
+map<key_type, mapped_type>::~map() {
+    clear();
+}
+
+template <typename key_type, typename mapped_type>
+map<key_type, mapped_type>::map(map&& m) : root(m.root), size_(m.size_) {
+    m.root = nullptr;
+    m.size_ = 0;
 }
 
 template <typename key_type, typename mapped_type>
@@ -236,9 +294,6 @@ map<key_type, mapped_type>::insert_or_assign(const key_type& key,
     }
     return result;
 }
-
-template <typename key_type, typename mapped_type>
-void map<key_type, mapped_type>::clear() {}
 
 }  // namespace s21
 
