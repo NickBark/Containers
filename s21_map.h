@@ -156,6 +156,7 @@ map<key_type, mapped_type>::end() {
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::iterator
 map<key_type, mapped_type>::begin() {
+    if (!root) return iterator(nullptr);
     Node<key_type, mapped_type>* cur = root;
     while (cur->left_) cur = cur->left_;
     return iterator(cur);

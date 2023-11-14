@@ -22,13 +22,20 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
 
-    s21::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33}};
+    s21::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33},
+                               {4, 5},  {10, 3}, {6, 5}};
     s21::map<int, int> map2(map1);
 
     s21::map<int, int>::iterator it = map2.begin();
     while (it != map2.end()) {
         std::cout << it->second << std::endl;
         it++;
+    }
+    std::cout << "------" << std::endl;
+    s21::map<int, int>::iterator itt = map1.begin();
+    while (itt != map1.end()) {
+        std::cout << itt->second << std::endl;
+        itt++;
     }
     // std::cout << map1.insert({1, 11}).second << std::endl;
     // std::cout << map1.insert({2, 22}).second << std::endl;
