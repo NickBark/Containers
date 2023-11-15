@@ -157,7 +157,7 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
         node->left_ = eraseNode(node->left_, key);
     } else if (key > node->data_.first) {
         node->right_ = eraseNode(node->right_, key);
-    } else {
+    } else if (key == node->data_.first) {
         if (!node->left_ && !node->right_) {
             delete node;
             return nullptr;

@@ -28,11 +28,12 @@ int main() {
 
     map2 = std::move(map1);
     s21::map<int, int>::iterator ooo = map2.begin();
-    ooo++;
-    ooo++;
+    // ooo++;
+    // ooo++;
+    // ooo++;
     std::cout << ooo->second << std::endl;
-    // map2.erase(ooo);
-    std::cout << ooo->second << std::endl;
+    map2.erase(ooo);
+
     std::cout << "------" << std::endl;
     s21::map<int, int>::iterator it = map2.begin();
     while (it != map2.end()) {
