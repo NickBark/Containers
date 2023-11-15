@@ -66,8 +66,12 @@ class map {
         value_type* operator->() const noexcept { return &(current_->data_); }
 
         MapIterator operator++() {
+            if (!current_) return nullptr;
             if (current_->right_) {
-                current_ = findMin(current_->right_);
+                current_ = current_->right_;
+                while (current_->left_) {
+                    current_ = current_->left_;
+                }
             } else {
                 if (current_->parent_ &&
                     current_->parent_->data_ > current_->data_)
@@ -81,6 +85,7 @@ class map {
         }
 
         MapIterator operator--() {
+            if (!current_) return nullptr;
             if (current_->left_) {
                 current_ = current_->left_;
                 while (current_->right_) {
@@ -166,8 +171,11 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
             return tmp;
         } else {
             Node<key_type, mapped_type>* tmp = findMin(node->right_);
-            std::swap(node->data_, tmp->data_);
-            delete tmp;
+            tmp->parent_ = node->parent_;
+            tmp->left_ = node->left_;
+            tmp->right_ = node->right_;
+            delete node;
+            return tmp;
         }
     }
     return node;

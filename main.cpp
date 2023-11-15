@@ -22,25 +22,29 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
 
-    std::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33},
+    s21::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33},
                                {4, 5},  {10, 3}, {6, 5}};
-    std::map<int, int> map2;
+    s21::map<int, int> map2;
 
     map2 = std::move(map1);
-    std::map<int, int>::iterator ooo = map2.begin();
-    map2.erase(ooo);
-
-    std::map<int, int>::iterator it = map2.begin();
+    s21::map<int, int>::iterator ooo = map2.begin();
+    ooo++;
+    ooo++;
+    std::cout << ooo->second << std::endl;
+    // map2.erase(ooo);
+    std::cout << ooo->second << std::endl;
+    std::cout << "------" << std::endl;
+    s21::map<int, int>::iterator it = map2.begin();
     while (it != map2.end()) {
         std::cout << it->second << std::endl;
         it++;
     }
-    std::cout << "------" << std::endl;
-    std::map<int, int>::iterator itt = map1.begin();
-    while (itt != map1.end()) {
-        std::cout << itt->second << std::endl;
-        itt++;
-    }
+    // std::cout << "------" << std::endl;
+    // std::map<int, int>::iterator itt = map1.begin();
+    // while (itt != map1.end()) {
+    //     std::cout << itt->second << std::endl;
+    //     itt++;
+    // }
     // std::cout << map1.insert({1, 11}).second << std::endl;
     // std::cout << map1.insert({2, 22}).second << std::endl;
     // std::cout << map1.insert({3, 33}).second << std::endl;
