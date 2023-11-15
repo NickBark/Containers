@@ -31,6 +31,12 @@ class map {
     Node<key_type, mapped_type>* root;
     size_type size_;
 
+    void copyNode(const Node<key_type, mapped_type>* src);
+    void deleteNode(Node<key_type, mapped_type>* node);
+    Node<key_type, mapped_type>* eraseNode(Node<key_type, mapped_type>* node,
+                                           const key_type& key);
+    Node<key_type, mapped_type>* findMin(Node<key_type, mapped_type>* node);
+
    public:
     map();
     map(std::initializer_list<value_type> const& items);
@@ -45,8 +51,7 @@ class map {
     inline size_type size() const { return size_; }
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
     mapped_type& at(const key_type& key);
-    void copyNode(const Node<key_type, mapped_type>* src);
-    void deleteNode(Node<key_type, mapped_type>* node);
+
     void swap(map& other);
 
    private:
@@ -62,10 +67,7 @@ class map {
 
         MapIterator operator++() {
             if (current_->right_) {
-                current_ = current_->right_;
-                while (current_->left_) {
-                    current_ = current_->left_;
-                }
+                current_ = findMin(current_->right_);
             } else {
                 if (current_->parent_ &&
                     current_->parent_->data_ > current_->data_)
@@ -128,7 +130,53 @@ class map {
                                                const mapped_type& obj);
 
     mapped_type& operator[](const key_type& key) { return at(key); }
+    void erase(iterator pos);
 };
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::Node<key_type, mapped_type>*
+map<key_type, mapped_type>::findMin(Node<key_type, mapped_type>* node) {
+    while (node->left_) {
+        node = node->left_;
+    }
+    return node;
+}
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::Node<key_type, mapped_type>*
+map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
+                                      const key_type& key) {
+    if (node == nullptr) return nullptr;
+
+    if (key < node->data_.first) {
+        node->left_ = eraseNode(node->left_, key);
+    } else if (key > node->data_.first) {
+        node->right_ = eraseNode(node->right_, key);
+    } else {
+        if (!node->left_ && !node->right_) {
+            delete node;
+            return nullptr;
+        } else if (node->left_ && !node->right_) {
+            Node<key_type, mapped_type>* tmp = node->left_;
+            delete node;
+            return tmp;
+        } else if (!node->left_ && node->right_) {
+            Node<key_type, mapped_type>* tmp = node->right_;
+            delete node;
+            return tmp;
+        } else {
+            Node<key_type, mapped_type>* tmp = findMin(node->right_);
+            std::swap(node->data_, tmp->data_);
+            delete tmp;
+        }
+    }
+    return node;
+}
+
+template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::erase(iterator pos) {
+    root = eraseNode(root, pos.operator->()->first);
+}
 
 template <typename key_type, typename mapped_type>
 void map<key_type, mapped_type>::swap(map& other) {
