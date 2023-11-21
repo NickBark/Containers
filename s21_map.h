@@ -66,8 +66,8 @@ class map {
         reference operator*() const noexcept { return current_->data_; }
         value_type* operator->() const noexcept { return &(current_->data_); }
 
-        MapIterator operator++() {
-            if (!current_) return nullptr;
+        MapIterator& operator++() {
+            if (!current_) return *this;
             if (current_->right_) {
                 current_ = current_->right_;
                 while (current_->left_) {
@@ -75,7 +75,7 @@ class map {
                 }
             } else {
                 if (current_->parent_ &&
-                    current_->parent_->data_ > current_->data_)
+                    current_->parent_->data_.first > current_->data_.first)
                     current_ = current_->parent_;
                 else {
                     current_ = nullptr;
@@ -85,8 +85,8 @@ class map {
             return *this;
         }
 
-        MapIterator operator--() {
-            if (!current_) return nullptr;
+        MapIterator& operator--() {
+            if (!current_) return *this;
             if (current_->left_) {
                 current_ = current_->left_;
                 while (current_->right_) {
@@ -183,7 +183,6 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
             return tmp;
         } else {
             Node<key_type, mapped_type>* tmp = findMin(node->right_);
-            // Node<key_type, mapped_type>* tmpR = findMax(tmp);
             if (!node->parent_) {
                 tmp->parent_ = nullptr;
             } else {
@@ -192,8 +191,6 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
             }
             tmp->left_ = node->left_;
             node->left_->parent_ = tmp;
-            // tmpR->right_ = node->right_;
-            // node->right_->parent_ = tmpR;
 
             delete node;
             return tmp;
@@ -206,6 +203,7 @@ template <typename key_type, typename mapped_type>
 void map<key_type, mapped_type>::erase(iterator pos) {
     if (pos == end()) return;
     root = eraseNode(root, pos.operator->()->first);
+    size_--;
 }
 
 template <typename key_type, typename mapped_type>
@@ -320,6 +318,7 @@ std::pair<typename map<key_type, mapped_type>::iterator, bool>
 map<key_type, mapped_type>::insert(const value_type& value) {
     Node<key_type, mapped_type>* newNode =
         new Node<key_type, mapped_type>(value);
+    // std::cout << value.first << " " << value.second << std::endl;
     if (!root) {
         root = newNode;
         size_++;
@@ -336,7 +335,7 @@ map<key_type, mapped_type>::insert(const value_type& value) {
             cur = cur->left_;
         } else if (value.first > cur->data_.first) {
             cur = cur->right_;
-        } else {
+        } else if (value.first == cur->data_.first) {
             delete newNode;
             duplicate = true;
             break;
@@ -345,12 +344,14 @@ map<key_type, mapped_type>::insert(const value_type& value) {
 
     if (!duplicate) {
         newNode->parent_ = parent;
-        if (value.first < parent->data_.first) {
+        if (newNode->data_.first < parent->data_.first) {
             parent->left_ = newNode;
         } else {
             parent->right_ = newNode;
         }
         size_++;
+    } else {
+        delete newNode;
     }
 
     return std::make_pair(iterator(newNode), !duplicate);
