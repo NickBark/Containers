@@ -23,14 +23,13 @@ int main() {
     // }
 
     s21::map<int, int> map1 = {{2, 11}, {3, 22}, {1, 33},
-                               {4, 5},  {10, 3}, {6, 5}};
+                               {4, 55}, {10, 3}, {6, 5}};
     s21::map<int, int> map2;
 
     map2 = std::move(map1);
     s21::map<int, int>::iterator ooo = map2.begin();
-    // ooo++;
-    // ooo++;
-    // ooo++;
+
+    ooo++;
     std::cout << ooo->second << std::endl;
     map2.erase(ooo);
 

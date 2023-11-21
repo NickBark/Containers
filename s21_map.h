@@ -36,6 +36,7 @@ class map {
     Node<key_type, mapped_type>* eraseNode(Node<key_type, mapped_type>* node,
                                            const key_type& key);
     Node<key_type, mapped_type>* findMin(Node<key_type, mapped_type>* node);
+    Node<key_type, mapped_type>* findMax(Node<key_type, mapped_type>* node);
 
    public:
     map();
@@ -149,6 +150,15 @@ map<key_type, mapped_type>::findMin(Node<key_type, mapped_type>* node) {
 
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::Node<key_type, mapped_type>*
+map<key_type, mapped_type>::findMax(Node<key_type, mapped_type>* node) {
+    while (node->right_) {
+        node = node->right_;
+    }
+    return node;
+}
+
+template <typename key_type, typename mapped_type>
+typename map<key_type, mapped_type>::Node<key_type, mapped_type>*
 map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
                                       const key_type& key) {
     if (node == nullptr) return nullptr;
@@ -163,17 +173,28 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
             return nullptr;
         } else if (node->left_ && !node->right_) {
             Node<key_type, mapped_type>* tmp = node->left_;
+            node->left_->parent_ = tmp;
             delete node;
             return tmp;
         } else if (!node->left_ && node->right_) {
             Node<key_type, mapped_type>* tmp = node->right_;
+            node->right_->parent_ = tmp;
             delete node;
             return tmp;
         } else {
             Node<key_type, mapped_type>* tmp = findMin(node->right_);
-            tmp->parent_ = node->parent_;
+            // Node<key_type, mapped_type>* tmpR = findMax(tmp);
+            if (!node->parent_) {
+                tmp->parent_ = nullptr;
+            } else {
+                tmp->parent_ = node->parent_;
+                node->parent_->right_ = tmp;
+            }
             tmp->left_ = node->left_;
-            tmp->right_ = node->right_;
+            node->left_->parent_ = tmp;
+            // tmpR->right_ = node->right_;
+            // node->right_->parent_ = tmpR;
+
             delete node;
             return tmp;
         }
@@ -183,6 +204,7 @@ map<key_type, mapped_type>::eraseNode(Node<key_type, mapped_type>* node,
 
 template <typename key_type, typename mapped_type>
 void map<key_type, mapped_type>::erase(iterator pos) {
+    if (pos == end()) return;
     root = eraseNode(root, pos.operator->()->first);
 }
 
@@ -272,6 +294,7 @@ map<key_type, mapped_type>::map(const map& m) : root(nullptr) {
 
 template <typename key_type, typename mapped_type>
 map<key_type, mapped_type>::~map() {
+    std::cout << "~map" << std::endl;
     clear();
 }
 
