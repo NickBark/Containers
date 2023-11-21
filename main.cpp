@@ -28,10 +28,13 @@ int main() {
     map1.insert(1, 33);
     map1.insert(4, 55);
     // map1.insert(-3, 303);
-    map1.insert(6, 5);
-    map1.insert(5, 13);
-    map1.insert(-2, 3);
-    map1.insert(8, 122);
+    s21::map<int, int> map2;
+    map2.insert(6, 5);
+    map2.insert(5, 13);
+    map2.insert(-2, 3);
+    map2.insert(8, 122);
+
+    // map1.merge(map2);
 
     // s21::map<int, int> map2;
 

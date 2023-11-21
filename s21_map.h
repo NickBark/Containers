@@ -53,6 +53,7 @@ class map {
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
     mapped_type& at(const key_type& key);
     bool contains(const key_type& key);
+    void merge(map& other);
 
     void swap(map& other);
 
@@ -387,6 +388,15 @@ bool map<key_type, mapped_type>::contains(const key_type& key) {
         it++;
     }
     return res;
+}
+
+template <typename key_type, typename mapped_type>
+void map<key_type, mapped_type>::merge(map& other) {
+    iterator it = other.begin();
+    while (it != other.end()) {
+        insert_or_assign(it.operator->()->first, it.operator->()->second);
+        it++;
+    }
 }
 
 }  // namespace s21
