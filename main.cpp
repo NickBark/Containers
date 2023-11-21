@@ -27,10 +27,10 @@ int main() {
     map1.insert(3, 22);
     map1.insert(1, 33);
     map1.insert(4, 55);
-    map1.insert(-5, 303);
+    // map1.insert(-3, 303);
     map1.insert(6, 5);
     map1.insert(5, 13);
-    map1.insert(-4, 3);
+    map1.insert(-2, 3);
     map1.insert(8, 122);
 
     // s21::map<int, int> map2;
@@ -43,15 +43,15 @@ int main() {
 
     // std::cout << ooo->second << std::endl;
     // map2.erase(ooo);
-
-    std::cout << "------" << std::endl;
+    std::cout << map1.contains(88) << std::endl;
     s21::map<int, int>::iterator it = map1.begin();
-
-    std::cout << map1.size() << std::endl;
+    std::cout << "------" << std::endl;
     while (it != map1.end()) {
         std::cout << it->second << std::endl;
-        it++;
+
+        ++it;
     }
+
     // std::cout << "------" << std::endl;
     // std::map<int, int>::iterator itt = map1.begin();
     // while (itt != map1.end()) {

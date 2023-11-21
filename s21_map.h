@@ -52,6 +52,7 @@ class map {
     inline size_type size() const { return size_; }
     size_type max_size() const { return std::numeric_limits<size_type>::max(); }
     mapped_type& at(const key_type& key);
+    bool contains(const key_type& key);
 
     void swap(map& other);
 
@@ -68,6 +69,7 @@ class map {
 
         MapIterator& operator++() {
             if (!current_) return *this;
+
             if (current_->right_) {
                 current_ = current_->right_;
                 while (current_->left_) {
@@ -292,7 +294,6 @@ map<key_type, mapped_type>::map(const map& m) : root(nullptr) {
 
 template <typename key_type, typename mapped_type>
 map<key_type, mapped_type>::~map() {
-    std::cout << "~map" << std::endl;
     clear();
 }
 
@@ -318,7 +319,6 @@ std::pair<typename map<key_type, mapped_type>::iterator, bool>
 map<key_type, mapped_type>::insert(const value_type& value) {
     Node<key_type, mapped_type>* newNode =
         new Node<key_type, mapped_type>(value);
-    // std::cout << value.first << " " << value.second << std::endl;
     if (!root) {
         root = newNode;
         size_++;
@@ -344,9 +344,9 @@ map<key_type, mapped_type>::insert(const value_type& value) {
 
     if (!duplicate) {
         newNode->parent_ = parent;
-        if (newNode->data_.first < parent->data_.first) {
+        if (value.first < parent->data_.first) {
             parent->left_ = newNode;
-        } else {
+        } else if (value.first > parent->data_.first) {
             parent->right_ = newNode;
         }
         size_++;
@@ -373,6 +373,20 @@ map<key_type, mapped_type>::insert_or_assign(const key_type& key,
         at(key) = obj;
     }
     return result;
+}
+
+template <typename key_type, typename mapped_type>
+bool map<key_type, mapped_type>::contains(const key_type& key) {
+    iterator it = begin();
+    bool res = false;
+    while (it != end()) {
+        if (it.operator->()->first == key) {
+            res = true;
+            break;
+        }
+        it++;
+    }
+    return res;
 }
 
 }  // namespace s21
