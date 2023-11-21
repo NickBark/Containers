@@ -27,7 +27,7 @@ int main() {
     map1.insert(3, 22);
     map1.insert(1, 33);
     map1.insert(4, 55);
-    map1.insert(-100, 303);
+    map1.insert(-5, 303);
     map1.insert(6, 5);
     map1.insert(5, 13);
     map1.insert(-4, 3);
