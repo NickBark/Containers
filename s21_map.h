@@ -127,6 +127,16 @@ class map {
         }
     };
 
+    template <typename key_type, typename mapped_type>
+    class MapConstIterator : public MapIterator<key_type, mapped_type> {
+        MapConstIterator(const Node<key_type, mapped_type>* newNode)
+            : MapIterator<key_type, mapped_type>(
+                  const_cast<Node<key_type, mapped_type>*>(newNode)) {}
+
+        MapConstIterator(const MapIterator<key_type, mapped_type>& other)
+            : MapIterator<key_type, mapped_type>(other) {}
+    };
+
    public:
     using iterator = MapIterator<key_type, mapped_type>;
     iterator begin();

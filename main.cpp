@@ -2,6 +2,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <queue>
 
 #include "s21_containers.h"
 
@@ -20,6 +21,17 @@ int main() {
     // copy_n(doubles, ints, 4);
     // for (size_t i = 0; i < 4; i++) {
     //     std::cout << doubles[i] << " ";
+    // }
+    s21::queue<int> qwe;
+    std::queue<int> ewq;
+
+    qwe.push(10);
+    qwe.push(11);
+    qwe.push(12);
+
+    // while (!qwe.empty()) {
+    //     std::cout << qwe.front() << std::endl;
+    //     qwe.pop();
     // }
 
     s21::map<int, int> map1;
@@ -46,14 +58,14 @@ int main() {
 
     // std::cout << ooo->second << std::endl;
     // map2.erase(ooo);
-    std::cout << map1.contains(88) << std::endl;
-    s21::map<int, int>::iterator it = map1.begin();
-    std::cout << "------" << std::endl;
-    while (it != map1.end()) {
-        std::cout << it->second << std::endl;
+    // std::cout << map1.contains(88) << std::endl;
+    // s21::map<int, int>::iterator it = map1.begin();
+    // std::cout << "------" << std::endl;
+    // while (it != map1.end()) {
+    //     std::cout << it->second << std::endl;
 
-        ++it;
-    }
+    //     ++it;
+    // }
 
     // std::cout << "------" << std::endl;
     // std::map<int, int>::iterator itt = map1.begin();
