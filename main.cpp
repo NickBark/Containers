@@ -23,17 +23,23 @@ int main() {
     //     std::cout << doubles[i] << " ";
     // }
     s21::queue<int> qwe;
-    std::queue<int> ewq;
 
     qwe.push(10);
     qwe.push(11);
     qwe.push(12);
 
-    // while (!qwe.empty()) {
-    //     std::cout << qwe.front() << std::endl;
-    //     qwe.pop();
-    // }
+    s21::queue<int> ewq = std::move(qwe);
 
+    while (!ewq.empty()) {
+        std::cout << ewq.front() << std::endl;
+        ewq.pop();
+    }
+
+    std::cout << "--------" << std::endl;
+    while (!qwe.empty()) {
+        std::cout << qwe.front() << std::endl;
+        qwe.pop();
+    }
     s21::map<int, int> map1;
     map1.insert(2, 11);
     map1.insert(3, 22);
