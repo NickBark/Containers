@@ -47,7 +47,7 @@ class queue {
 
 template <typename value_type>
 queue<value_type>& queue<value_type>::operator=(queue&& q) {
-    if (this != q) {
+    if (this != &q) {
         queue<value_type> tmp(std::move(q));
         swap(tmp);
     }
@@ -56,7 +56,7 @@ queue<value_type>& queue<value_type>::operator=(queue&& q) {
 
 template <typename value_type>
 queue<value_type>& queue<value_type>::operator=(queue& q) {
-    if (this != q) {
+    if (this != &q) {
         queue<value_type> tmp(q);
         swap(tmp);
     }
