@@ -29,6 +29,7 @@ class queue {
    public:
     queue() : head_(nullptr), tail_(nullptr), size_(0) {}
     ~queue();
+    queue(std::initializer_list<value_type> const& items);
 
     const_reference front() const { return head_->data_; }
     const_reference back() const { return tail_->data_; }
@@ -36,7 +37,16 @@ class queue {
     size_type size() const { return size_; }
     void push(const_reference value);
     void pop();
+    void swap(queue& other);
 };
+
+template <typename value_type>
+queue<value_type>::queue(std::initializer_list<value_type> const& items)
+    : head_(nullptr), tail_(nullptr), size_(0) {
+    for (const_reference item : items) {
+        push(item);
+    }
+}
 
 template <typename value_type>
 queue<value_type>::~queue() {
@@ -66,6 +76,12 @@ void queue<value_type>::push(const_reference value) {
         tail_ = newNode;
         size_++;
     }
+}
+template <typename value_type>
+void queue<value_type>::swap(queue& other) {
+    std::swap(head_, other.head_);
+    std::swap(tail_, other.tail_);
+    std::swap(size_, other.size_);
 }
 
 }  // namespace s21
