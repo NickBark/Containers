@@ -14,19 +14,6 @@ class queue {
     using const_reference = const T&;
     using size_type = size_t;
 
-   private:
-    class Node {
-       public:
-        value_type data_;
-        Node* pNext_;
-        Node(const_reference data) : data_(data), pNext_(nullptr) {}
-    };
-
-    Node* head_;
-    Node* tail_;
-    size_type size_;
-
-   public:
     queue() : head_(nullptr), tail_(nullptr), size_(0) {}
     ~queue();
     queue(std::initializer_list<value_type> const& items);
@@ -43,6 +30,18 @@ class queue {
     void push(const_reference value);
     void pop();
     void swap(queue& other);
+
+   private:
+    class Node {
+       public:
+        value_type data_;
+        Node* pNext_;
+        Node(const_reference data) : data_(data), pNext_(nullptr) {}
+    };
+
+    Node* head_;
+    Node* tail_;
+    size_type size_;
 };
 
 template <typename value_type>
@@ -118,6 +117,7 @@ void queue<value_type>::push(const_reference value) {
         size_++;
     }
 }
+
 template <typename value_type>
 void queue<value_type>::swap(queue& other) {
     std::swap(head_, other.head_);

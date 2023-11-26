@@ -22,35 +22,34 @@ int main() {
     // for (size_t i = 0; i < 4; i++) {
     //     std::cout << doubles[i] << " ";
     // }
-    s21::queue<int> qwe;
+    std::queue<int> qwe;
 
-    qwe.push(10);
-    qwe.push(11);
-    qwe.push(12);
+    // qwe.push(10);
+    // qwe.push(11);
 
-    s21::queue<int> ewq = std::move(qwe);
+    // s21::queue<int> ewq = qwe;
 
-    while (!ewq.empty()) {
-        std::cout << ewq.front() << std::endl;
-        ewq.pop();
-    }
+    // while (!ewq.empty()) {
+    //     std::cout << ewq.front() << std::endl;
+    //     ewq.pop();
+    // }
 
-    std::cout << "--------" << std::endl;
-    while (!qwe.empty()) {
-        std::cout << qwe.front() << std::endl;
-        qwe.pop();
-    }
-    s21::map<int, int> map1;
-    map1.insert(2, 11);
-    map1.insert(3, 22);
-    map1.insert(1, 33);
-    map1.insert(4, 55);
-    // map1.insert(-3, 303);
-    s21::map<int, int> map2;
-    map2.insert(6, 5);
-    map2.insert(5, 13);
-    map2.insert(-2, 3);
-    map2.insert(8, 122);
+    // std::cout << "--------" << std::endl;
+    // while (!qwe.empty()) {
+    //     std::cout << qwe.front() << std::endl;
+    //     qwe.pop();
+    // }
+    // s21::map<int, int> map1;
+    // map1.insert(2, 11);
+    // map1.insert(3, 22);
+    // map1.insert(1, 33);
+    // map1.insert(4, 55);
+    // // map1.insert(-3, 303);
+    // s21::map<int, int> map2;
+    // map2.insert(6, 5);
+    // map2.insert(5, 13);
+    // map2.insert(-2, 3);
+    // map2.insert(8, 122);
 
     // map1.merge(map2);
 
