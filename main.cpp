@@ -23,13 +23,9 @@ int main() {
     // for (size_t i = 0; i < 4; i++) {
     //     std::cout << doubles[i] << " ";
     // }
-    s21::stack<int> stk;
+    s21::stack<int> stk = {10, 20, 30};
 
-    stk.push(10);
-    stk.push(20);
-    stk.push(30);
-
-    s21::stack<int> stk2 = std::move(stk);
+    s21::stack<int> stk2 = stk;
 
     while (!stk2.empty()) {
         std::cout << stk2.top() << std::endl;
