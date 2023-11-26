@@ -3,6 +3,7 @@
 #include <list>
 #include <map>
 #include <queue>
+#include <stack>
 
 #include "s21_containers.h"
 
@@ -22,8 +23,23 @@ int main() {
     // for (size_t i = 0; i < 4; i++) {
     //     std::cout << doubles[i] << " ";
     // }
-    std::queue<int> qwe;
+    s21::stack<int> stk;
 
+    stk.push(10);
+    stk.push(20);
+    stk.push(30);
+
+    s21::stack<int> stk2 = std::move(stk);
+
+    while (!stk2.empty()) {
+        std::cout << stk2.top() << std::endl;
+        stk2.pop();
+    }
+    std::cout << "--------" << std::endl;
+    while (!stk.empty()) {
+        std::cout << stk.top() << std::endl;
+        stk.pop();
+    }
     // qwe.push(10);
     // qwe.push(11);
 

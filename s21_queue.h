@@ -21,12 +21,13 @@ class queue {
     queue(const queue& q);
 
     queue<value_type>& operator=(queue&& q);
-    queue<value_type>& operator=(queue& q);
+    queue<value_type>& operator=(const queue& q);
 
     const_reference front() const { return head_->data_; }
     const_reference back() const { return tail_->data_; }
     bool empty() const { return !size_; }
     size_type size() const { return size_; }
+
     void push(const_reference value);
     void pop();
     void swap(queue& other);
@@ -54,7 +55,7 @@ queue<value_type>& queue<value_type>::operator=(queue&& q) {
 }
 
 template <typename value_type>
-queue<value_type>& queue<value_type>::operator=(queue& q) {
+queue<value_type>& queue<value_type>::operator=(const queue& q) {
     if (this != &q) {
         queue<value_type> tmp(q);
         swap(tmp);
@@ -110,12 +111,11 @@ void queue<value_type>::push(const_reference value) {
     if (!head_) {
         head_ = newNode;
         tail_ = newNode;
-        size_++;
     } else {
         tail_->pNext_ = newNode;
         tail_ = newNode;
-        size_++;
     }
+    size_++;
 }
 
 template <typename value_type>
