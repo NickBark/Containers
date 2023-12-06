@@ -172,6 +172,9 @@ class list {
     void erase(iterator pos);
     void splice(const_iterator pos, list& other);
 
+    template <typename... Args>
+    iterator insert_many(const_iterator pos, Args&&... args);
+
     const_iterator begin() const {
         if (!head) throw std::out_of_range("The list has no elements");
         return const_iterator(head);
@@ -192,6 +195,13 @@ class list {
         return iterator(tail->pNext);
     }
 };
+
+template <typename value_type>
+template <typename... Args>
+typename list<value_type>::iterator list<value_type>::insert_many(
+    const_iterator pos, Args&&... args) {
+    return (insert(pos, std::forward<Args>(args)), ...);
+}
 
 template <typename value_type>
 void list<value_type>::merge(list& other) {

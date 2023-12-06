@@ -4,6 +4,7 @@
 #include <map>
 #include <queue>
 #include <stack>
+#include <thread>
 
 #include "s21_containers.h"
 
@@ -16,26 +17,62 @@
 //     }
 // }
 
+// class Animal {
+//    public:
+//     Animal(int aaa = 10) : aaa_(aaa) {
+//         std::cout << "Animal()" << aaa << std::endl;
+//     }
+//     ~Animal() { std::cout << "~Animal()" << std::endl; }
+
+//     int aaa_;
+// };
+
+// void foo() {
+//     Animal a;
+//     throw 1;
+// }
+
 int main() {
+    s21::list<std::string> list = {"a", "b", "c"};
+    s21::list<std::string>::iterator it = list.begin();
+    it++;
+    it = list.insert_many(it, "d", "g", "k", "l");
+    std::cout << *it << std::endl;
+    for (auto itt = list.begin(); itt != list.end(); ++itt) {
+        std::cout << *itt << " ";
+    }
+    // list.insert_many(it, "Hello");
+    // list.print_list();
+    // std::cout << "---->" << *it << std::endl;
+    // list.insert_many(list.begin(), 1, 2, 3, 3, 4, 5.6, 7, "Hello");
+
+    // try {
+    //     std::thread t(foo);
+    //     std::cout << "hello()" << std::endl;
+    // } catch (std::exception& e) {
+    //     std::cout << "error" << std::endl;
+    // }
+
     // int ints[] = {1, 2, 3, 4};
     // double doubles[4] = {};
     // copy_n(doubles, ints, 4);
     // for (size_t i = 0; i < 4; i++) {
     //     std::cout << doubles[i] << " ";
     // }
-    s21::stack<int> stk = {10, 20, 30};
+    // s21::stack<int> stk = {10, 20, 30};
 
-    s21::stack<int> stk2 = stk;
+    // s21::stack<int> stk2 = stk;
 
-    while (!stk2.empty()) {
-        std::cout << stk2.top() << std::endl;
-        stk2.pop();
-    }
-    std::cout << "--------" << std::endl;
-    while (!stk.empty()) {
-        std::cout << stk.top() << std::endl;
-        stk.pop();
-    }
+    // while (!stk2.empty()) {
+    //     std::cout << stk2.top() << std::endl;
+    //     stk2.pop();
+    // }
+    // std::cout << "--------" << std::endl;
+    // while (!stk.empty()) {
+    //     std::cout << stk.top() << std::endl;
+    //     stk.pop();
+    // }
+
     // qwe.push(10);
     // qwe.push(11);
 
