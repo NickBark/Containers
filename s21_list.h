@@ -175,6 +175,12 @@ class list {
     template <typename... Args>
     iterator insert_many(const_iterator pos, Args&&... args);
 
+    template <typename... Args>
+    void insert_many_back(Args&&... args);
+
+    template <typename... Args>
+    void insert_many_front(Args&&... args);
+
     const_iterator begin() const {
         if (!head) throw std::out_of_range("The list has no elements");
         return const_iterator(head);
@@ -186,15 +192,29 @@ class list {
     }
 
     const_iterator end() const {
-        if (!tail) throw std::out_of_range("The list has no elements");
-        return const_iterator(tail->pNext);
+        // if (!tail) throw std::out_of_range("The list has no elements");
+        // return const_iterator(tail->pNext);
+        return const_iterator(nullptr);
     }
 
     iterator end() {
-        if (!tail) throw std::out_of_range("The list has no elements");
-        return iterator(tail->pNext);
+        // if (!tail) throw std::out_of_range("The list has no elements");
+        // return iterator(tail->pNext);
+        return iterator(nullptr);
     }
 };
+
+template <typename value_type>
+template <typename... Args>
+void list<value_type>::insert_many_front(Args&&... args) {
+    (push_front(std::forward<Args>(args)), ...);  // фиксить порядок добавления
+}
+
+template <typename value_type>
+template <typename... Args>
+void list<value_type>::insert_many_back(Args&&... args) {
+    (push_back(std::forward<Args>(args)), ...);
+}
 
 template <typename value_type>
 template <typename... Args>

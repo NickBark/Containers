@@ -35,9 +35,12 @@
 int main() {
     s21::list<std::string> list = {"a", "b", "c"};
     s21::list<std::string>::iterator it = list.begin();
-    it++;
-    it = list.insert_many(it, "d", "g", "k", "l");
-    std::cout << *it << std::endl;
+
+    // it--;
+    // it--;
+    // std::cout << *it << std::endl;
+    list.insert_many_front("d", "g", "k", "l");
+
     for (auto itt = list.begin(); itt != list.end(); ++itt) {
         std::cout << *itt << " ";
     }
