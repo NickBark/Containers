@@ -39,10 +39,14 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-
-    s21::list<std::string> list(0);
-    s21::list<std::string>::iterator it = list.begin();
-    it--;
+    s21::map<int, int> ppp = {{1, 1}, {2, 2}};
+    ppp.insert_many(std::make_pair(22, 22), std::make_pair(33, 33));
+    for (auto it = ppp.begin(); it != ppp.end(); it++) {
+        std::cout << it->second << std::endl;
+    }
+    // s21::list<std::string> list(0);
+    // s21::list<std::string>::iterator it = list.begin();
+    // it--;
 
     // it--;
     // it--;

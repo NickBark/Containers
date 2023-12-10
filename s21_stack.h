@@ -47,7 +47,7 @@ class stack {
 template <typename value_type>
 template <typename... Args>
 void stack<value_type>::insert_many_front(Args&&... args) {
-    (push(std::forward(args)), ...);
+    (push(std::forward<Args>(args)), ...);
 }
 
 template <typename value_type>

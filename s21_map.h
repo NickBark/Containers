@@ -150,7 +150,18 @@ class map {
 
     mapped_type& operator[](const key_type& key) { return at(key); }
     void erase(iterator pos);
+
+    template <typename... Args>
+    std::vector<std::pair<iterator, bool>> insert_many(Args&&... args);
 };
+
+template <typename key_type, typename mapped_type>
+template <typename... Args>
+std::vector<std::pair<typename map<key_type, mapped_type>::iterator, bool>>
+map<key_type, mapped_type>::insert_many(Args&&... args) {
+    return std::vector<std::pair<iterator, bool>>(
+        {(insert(std::forward<Args>(args)), ...)});
+}
 
 template <typename key_type, typename mapped_type>
 typename map<key_type, mapped_type>::Node<key_type, mapped_type>*
