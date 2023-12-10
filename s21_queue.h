@@ -32,6 +32,9 @@ class queue {
     void pop();
     void swap(queue& other);
 
+    template <typename... Args>
+    void insert_many_back(Args&&... args);
+
    private:
     class Node {
        public:
@@ -44,6 +47,12 @@ class queue {
     Node* tail_;
     size_type size_;
 };
+
+template <typename value_type>
+template <typename... Args>
+void queue<value_type>::insert_many_back(Args&&... args) {
+    (push(std::forward<Args>(args)), ...);
+}
 
 template <typename value_type>
 queue<value_type>& queue<value_type>::operator=(queue&& q) {

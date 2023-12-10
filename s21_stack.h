@@ -30,6 +30,9 @@ class stack {
     void pop();
     void swap(stack& other);
 
+    template <typename... Args>
+    void insert_many_front(Args&&... args);
+
    private:
     class Node {
        public:
@@ -40,6 +43,12 @@ class stack {
     Node* head_;
     size_type size_;
 };
+
+template <typename value_type>
+template <typename... Args>
+void stack<value_type>::insert_many_front(Args&&... args) {
+    (push(std::forward(args)), ...);
+}
 
 template <typename value_type>
 stack<value_type>::stack(std::initializer_list<value_type> const& items)

@@ -96,11 +96,13 @@ class list {
         }
 
         ListIterator& operator--() {
+            if (!cur) throw std::out_of_range("End of list");
             cur = cur->pPrev;
             return *this;
         }
 
         ListIterator operator--(int) {
+            if (!cur) throw std::out_of_range("End of list");
             ListIterator<value_type> it = *this;
             cur = cur->pPrev;
             return it;
@@ -193,14 +195,14 @@ class list {
 
     const_iterator end() const {
         // if (!tail) throw std::out_of_range("The list has no elements");
-        // return const_iterator(tail->pNext);
-        return const_iterator(nullptr);
+        return const_iterator(tail->pNext);
+        // return const_iterator(nullptr);
     }
 
     iterator end() {
         // if (!tail) throw std::out_of_range("The list has no elements");
-        // return iterator(tail->pNext);
-        return iterator(nullptr);
+        return iterator(tail->pNext);
+        // return iterator(nullptr);
     }
 };
 

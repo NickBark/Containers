@@ -33,17 +33,29 @@
 // }
 
 int main() {
-    s21::list<std::string> list = {"a", "b", "c"};
+    // s21::queue<std::string> q = {"abba", "queen", "kiss", "roling stones"};
+    // q.insert_many_back("doors", "emimem");
+    // while (!q.empty()) {
+    //     std::cout << q.front() << std::endl;
+    //     q.pop();
+    // }
+
+    s21::list<std::string> list(0);
     s21::list<std::string>::iterator it = list.begin();
+    it--;
 
     // it--;
     // it--;
     // std::cout << *it << std::endl;
-    list.insert_many_front("d", "g", "k", "l");
+    // list.insert_many_front("d", "g", "k", "l");
+    // auto it_end = list.end();
+    // it_end--;
 
-    for (auto itt = list.begin(); itt != list.end(); ++itt) {
-        std::cout << *itt << " ";
-    }
+    // std::cout << *it << std::endl;
+
+    // for (auto itt = list.begin(); itt != list.end(); ++itt) {
+    //     std::cout << *itt << " ";
+    // }
     // list.insert_many(it, "Hello");
     // list.print_list();
     // std::cout << "---->" << *it << std::endl;
