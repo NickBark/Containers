@@ -65,7 +65,9 @@ class map {
 
        public:
         MapIterator(Node<key_type, mapped_type>* node) : current_(node) {}
-        reference operator*() const noexcept { return current_->data_; }
+        reference operator*() const noexcept {
+            return current_ ? current_->data_ : value_type();
+        }
         value_type* operator->() const noexcept { return &(current_->data_); }
 
         MapIterator& operator++() {
@@ -97,7 +99,7 @@ class map {
                 }
             } else {
                 if (current_->parent_ &&
-                    current_->parent_->data_ < current_->data_)
+                    current_->parent_->data_.first < current_->data_.first)
                     current_ = current_->parent_;
                 else {
                     current_ = nullptr;

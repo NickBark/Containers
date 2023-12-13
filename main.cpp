@@ -3,6 +3,7 @@
 #include <list>
 #include <map>
 #include <queue>
+#include <set>
 #include <stack>
 #include <thread>
 
@@ -39,11 +40,60 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-    s21::map<int, int> ppp = {{1, 1}, {2, 2}};
-    ppp.insert_many(std::make_pair(22, 22), std::make_pair(33, 33));
-    for (auto it = ppp.begin(); it != ppp.end(); it++) {
-        std::cout << it->second << std::endl;
+    s21::multiset<int> mySet;
+    mySet.insert(10);
+    mySet.insert(20);
+    mySet.insert(10);
+    mySet.insert(30);
+    mySet.insert(10);
+    mySet.insert(40);
+    mySet.insert(12);
+    auto qqq = mySet.insert(34);
+    mySet.insert(10);
+    mySet.insert(24);
+    mySet.insert(11);
+    mySet.insert(20);
+    mySet.insert(300);
+
+    auto ppp = mySet.find(300);
+    std::cout << *ppp << std::endl;
+    std::cout << "--->" << *qqq << std::endl;
+
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp--;
+    // std::cout << *ppp << std::endl;
+    // ppp--;
+    // std::cout << *ppp << std::endl;
+    // ppp--;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // ppp++;
+    // std::cout << *ppp << std::endl;
+    // std::cout << "-----------" << std::endl;
+    for (auto it = mySet.begin(); it != mySet.end(); it++) {
+        std::cout << *it << "\n";
     }
+
+    // s21::map<int, int> ppp = {{1, 1}, {2, 2}};
+    // ppp.insert_many(std::make_pair(22, 22), std::make_pair(33, 33));
+    // for (auto it = ppp.begin(); it != ppp.end(); it++) {
+    //     std::cout << it->second << std::endl;
+    // }
+
+    // std::cout << "\n---\nmultiset" << std::endl;
+
+    // s21::multiset<int> ms;
+    // std::cout << ms.empty() << ms.max_size() << ms.size() << std::endl;
     // s21::list<std::string> list(0);
     // s21::list<std::string>::iterator it = list.begin();
     // it--;
