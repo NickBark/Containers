@@ -62,9 +62,12 @@ class multiset {
                         cur = cur->left;
                     }
                 } else {
-                    if (cur->parent && cur->parent->value > cur->value)
+                    if (cur->parent) {
+                        value_type tmp = cur->value;
+                        while (cur->parent && cur->parent->value < tmp)
+                            cur = cur->parent;
                         cur = cur->parent;
-                    else {
+                    } else {
                         cur = nullptr;
                     }
                 }
@@ -87,7 +90,8 @@ class multiset {
                 } else {
                     if (cur->parent) {
                         value_type tmp = cur->value;
-                        while (cur->parent->value > tmp) cur = cur->parent;
+                        while (cur->parent && cur->parent->value > tmp)
+                            cur = cur->parent;
                         cur = cur->parent;
                     } else {
                         cur = nullptr;
@@ -127,8 +131,9 @@ class multiset {
 
     Node<value_type>* insertNode(Node<value_type>* node, const_reference val,
                                  Node<value_type>* parent);
-
     Node<value_type>* findNode(Node<value_type>* node, const_reference val);
+    Node<value_type>* eraseNode(Node<value_type>* node, const_reference val);
+    Node<value_type>* findMinNode(Node<value_type>* node);
 
    public:
     using iterator = MultisetIterator<value_type>;
@@ -140,7 +145,86 @@ class multiset {
     iterator insert(const value_type& value);
     iterator find(const_reference key);
     size_type count(const_reference key);
+    bool contains(const_reference key);
+    void erase(iterator pos);
 };
+
+template <typename value_type>
+typename multiset<value_type>::Node<value_type>*
+multiset<value_type>::findMinNode(Node<value_type>* node) {
+    if (!node->left) return node;
+    return findMinNode(node->left);
+}
+
+template <typename value_type>
+typename multiset<value_type>::Node<value_type>*
+multiset<value_type>::eraseNode(Node<value_type>* node, const_reference val) {
+    if (node->value == val) {
+        if (node->count > 1) {
+            node->count--;
+            return node;
+        }
+        if (!node->left && !node->right) {
+            if (node->parent) {
+                if (node->parent->right == node) node->parent->right = nullptr;
+                if (node->parent->left == node) node->parent->left = nullptr;
+            }
+            delete node;
+            return nullptr;
+        } else if (!node->left) {
+            Node<value_type>* tmp = node->right;
+            if (node->parent) {
+                if (node->parent->right == node) node->parent->right = tmp;
+                if (node->parent->left == node) node->parent->left = tmp;
+            }
+            tmp->parent = node->parent;
+            delete node;
+            return tmp;
+        } else if (!node->right) {
+            Node<value_type>* tmp = node->left;
+            if (node->parent) {
+                if (node->parent->right == node) node->parent->right = tmp;
+                if (node->parent->left == node) node->parent->left = tmp;
+            }
+            tmp->parent = node->parent;
+            delete node;
+            return tmp;
+        }
+
+        Node<value_type>* minNodeInRightSubtree = findMinNode(node->right);
+        node->value = minNodeInRightSubtree->value;
+        node->count = minNodeInRightSubtree->count;
+        node->right = eraseNode(node->right, minNodeInRightSubtree->value);
+
+        // return node;
+    } else if (node->value < val) {
+        node->right = node->right ? eraseNode(node->right, val) : nullptr;
+    } else if (node->value > val) {
+        node->left = node->left ? eraseNode(node->left, val) : nullptr;
+    }
+
+    return node;
+}
+
+template <typename value_type>
+void multiset<value_type>::erase(iterator pos) {
+    if (root) root = eraseNode(root, *pos);
+}
+
+// if (!pos.cur->left && !pos.cur->right) {
+//     if (pos.cur == pos.cur->parent->right) {
+//         pos.cur->parent->right = nullptr;
+//     } else if (pos.cur == pos.cur->parent->left) {
+//         pos.cur->parent->left = nullptr;
+//     }
+//     delete pos.cur;
+// }
+
+template <typename value_type>
+bool multiset<value_type>::contains(const_reference key) {
+    Node<value_type>* tmp = findNode(root, key);
+    return tmp ? true : false;
+}
 
 template <typename value_type>
 typename multiset<value_type>::size_type multiset<value_type>::count(
