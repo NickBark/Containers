@@ -45,10 +45,10 @@ int main() {
     mySet.insert(20);
     mySet.insert(10);
     mySet.insert(30);
-    mySet.insert(10);
+    auto qqq = mySet.insert(10);
     mySet.insert(40);
     mySet.insert(12);
-    auto qqq = mySet.insert(34);
+    mySet.insert(34);
     mySet.insert(10);
     mySet.insert(24);
     mySet.insert(11);
@@ -57,7 +57,7 @@ int main() {
 
     auto ppp = mySet.find(300);
     std::cout << *ppp << std::endl;
-    std::cout << "--->" << *qqq << std::endl;
+    std::cout << "--->" << mySet.count(10) << std::endl;
 
     // ppp++;
     // std::cout << *ppp << std::endl;

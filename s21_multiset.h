@@ -120,7 +120,6 @@ class multiset {
 
        private:
         Node<value_type>* cur;
-        // Node<value_type>* tmp;
         size_type counter;
     };
 
@@ -136,11 +135,19 @@ class multiset {
     // using const_iterator = MultisetConstIterator<value_type>;
 
     iterator begin();
-    iterator end();
+    iterator end() const;
 
     iterator insert(const value_type& value);
     iterator find(const_reference key);
+    size_type count(const_reference key);
 };
+
+template <typename value_type>
+typename multiset<value_type>::size_type multiset<value_type>::count(
+    const_reference key) {
+    Node<value_type>* tmp = findNode(root, key);
+    return tmp ? tmp->count : 0;
+}
 
 template <typename value_type>
 typename multiset<value_type>::Node<value_type>* multiset<value_type>::findNode(
@@ -186,6 +193,7 @@ template <typename value_type>
 typename multiset<value_type>::iterator multiset<value_type>::insert(
     const_reference value) {
     root = insertNode(root, value, nullptr);
+    size_++;
     return find(value);
 }
 
@@ -198,11 +206,11 @@ typename multiset<value_type>::iterator multiset<value_type>::begin() {
 }
 
 template <typename value_type>
-typename multiset<value_type>::iterator multiset<value_type>::end() {
-    Node<value_type>* tmp = root;
-    while (tmp->right) tmp = tmp->right;
+typename multiset<value_type>::iterator multiset<value_type>::end() const {
+    // Node<value_type>* tmp = root;
+    // while (tmp->right) tmp = tmp->right;
 
-    return iterator(tmp->right);
+    return iterator(nullptr);
 }
 
 }  // namespace s21
