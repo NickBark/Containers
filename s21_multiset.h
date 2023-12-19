@@ -20,6 +20,7 @@ class multiset {
     multiset(multiset&& ms);
     multiset& operator=(multiset&& ms);
     multiset& operator=(const multiset& ms);
+    multiset(std::initializer_list<value_type> const& items);
 
     bool empty() const { return !size_; }
     size_type size() const { return size_; }
@@ -197,6 +198,14 @@ template <typename value_type>
 multiset<value_type>::multiset(multiset&& ms) : root(ms.root), size_(ms.size_) {
     ms.root = nullptr;
     ms.size_ = 0;
+}
+
+template <typename value_type>
+multiset<value_type>::multiset(std::initializer_list<value_type> const& items)
+    : root(nullptr), size_(0) {
+    for (auto item : items) {
+        insert(item);
+    }
 }
 
 template <typename value_type>
