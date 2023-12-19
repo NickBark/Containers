@@ -42,6 +42,7 @@ int main() {
     // }
     s21::multiset<int> mySet;
     mySet.insert(10);
+    mySet.insert(9);
     mySet.insert(20);
     mySet.insert(10);
     mySet.insert(30);
@@ -61,12 +62,11 @@ int main() {
     std::cout << "---" << std::endl;
     mySet.erase(ppp);
     mySet.erase(ppp);
+
     mySet.erase(ppp);
     mySet.erase(ppp);
     mySet.erase(ppp);
     mySet.erase(ppp);
-    mySet.erase(ppp);
-    mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
@@ -76,6 +76,41 @@ int main() {
     // mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+
+    std::cout << mySet.count(400) << std::endl;
+    std::cout << "---" << std::endl;
+    // mySet.clear();
+    std::cout << mySet.size() << std::endl;
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+
+    for (auto it = mySet.begin(); it != mySet.end(); it++) {
+        std::cout << *it << "\n";
+    }
     // ppp++;
     // std::cout << *ppp << std::endl;
     // ppp++;
@@ -97,9 +132,6 @@ int main() {
     // ppp++;
     // std::cout << *ppp << std::endl;
     // std::cout << "-----------" << std::endl;
-    for (auto it = mySet.begin(); it != mySet.end(); it++) {
-        std::cout << *it << "\n";
-    }
 
     // s21::map<int, int> ppp = {{1, 1}, {2, 2}};
     // ppp.insert_many(std::make_pair(22, 22), std::make_pair(33, 33));

@@ -15,7 +15,7 @@ class multiset {
     using size_type = size_t;
 
     multiset() : root(nullptr), size_(0) {}
-    ~multiset() {}
+    ~multiset() { clear(); }
 
     bool empty() const { return !size_; }
     size_type size() const { return size_; }
@@ -134,6 +134,7 @@ class multiset {
     Node<value_type>* findNode(Node<value_type>* node, const_reference val);
     Node<value_type>* eraseNode(Node<value_type>* node, const_reference val);
     Node<value_type>* findMinNode(Node<value_type>* node);
+    void deleteNode(Node<value_type>* node);
 
    public:
     using iterator = MultisetIterator<value_type>;
@@ -147,7 +148,23 @@ class multiset {
     size_type count(const_reference key);
     bool contains(const_reference key);
     void erase(iterator pos);
+    void clear();
 };
+
+template <typename value_type>
+void multiset<value_type>::deleteNode(Node<value_type>* node) {
+    if (node) {
+        deleteNode(node->right);
+        deleteNode(node->left);
+        delete node;
+    }
+}
+
+template <typename value_type>
+void multiset<value_type>::clear() {
+    deleteNode(root);
+    size_ = 0;
+}
 
 template <typename value_type>
 typename multiset<value_type>::Node<value_type>*
@@ -208,7 +225,10 @@ multiset<value_type>::eraseNode(Node<value_type>* node, const_reference val) {
 
 template <typename value_type>
 void multiset<value_type>::erase(iterator pos) {
-    if (root) root = eraseNode(root, *pos);
+    if (contains(*pos)) {
+        if (root) root = eraseNode(root, *pos);
+        size_--;
+    }
 }
 
 // if (!pos.cur->left && !pos.cur->right) {
