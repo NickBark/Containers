@@ -87,13 +87,19 @@ stack<value_type>::~stack() {
 
 template <typename value_type>
 stack<value_type>& stack<value_type>::operator=(stack&& s) {
-    if (this != &s) swap(std::move(s));
+    if (this != &s) {
+        stack<value_type> tmp(std::move(s));
+        swap(tmp);
+    }
     return *this;
 }
 
 template <typename value_type>
 stack<value_type>& stack<value_type>::operator=(const stack& s) {
-    if (this != &s) swap(s);
+    if (this != &s) {
+        stack<value_type> tmp(s);
+        swap(tmp);
+    }
     return *this;
 }
 

@@ -16,6 +16,10 @@ class multiset {
 
     multiset() : root(nullptr), size_(0) {}
     ~multiset() { clear(); }
+    multiset(const multiset& ms);
+    multiset(multiset&& ms);
+    multiset& operator=(multiset&& ms);
+    multiset& operator=(const multiset& ms);
 
     bool empty() const { return !size_; }
     size_type size() const { return size_; }
@@ -135,6 +139,7 @@ class multiset {
     Node<value_type>* eraseNode(Node<value_type>* node, const_reference val);
     Node<value_type>* findMinNode(Node<value_type>* node);
     void deleteNode(Node<value_type>* node);
+    void copyNode(const Node<value_type>* node);
 
    public:
     using iterator = MultisetIterator<value_type>;
@@ -149,7 +154,55 @@ class multiset {
     bool contains(const_reference key);
     void erase(iterator pos);
     void clear();
+    void swap(multiset& other);
 };
+
+template <typename value_type>
+void multiset<value_type>::swap(multiset& other) {
+    std::swap(root, other.root);
+    std::swap(size_, other.size_);
+}
+
+template <typename value_type>
+void multiset<value_type>::copyNode(const Node<value_type>* node) {
+    if (node) {
+        insert(node->value);
+        size_++;
+        copyNode(node->left);
+        copyNode(node->right);
+    }
+}
+
+template <typename value_type>
+typename multiset<value_type>::multiset& multiset<value_type>::operator=(
+    const multiset& ms) {
+    if (this != &ms) {
+        multiset<value_type> tmp(ms);
+        swap(tmp);
+    }
+    return *this;
+}
+
+template <typename value_type>
+typename multiset<value_type>::multiset& multiset<value_type>::operator=(
+    multiset&& ms) {
+    if (this != &ms) {
+        multiset<value_type> tmp(std::move(ms));
+        swap(tmp);
+    }
+    return *this;
+}
+
+template <typename value_type>
+multiset<value_type>::multiset(multiset&& ms) : root(ms.root), size_(ms.size_) {
+    ms.root = nullptr;
+    ms.size_ = 0;
+}
+
+template <typename value_type>
+multiset<value_type>::multiset(const multiset& ms) : root(nullptr), size_(0) {
+    copyNode(ms.root);
+}
 
 template <typename value_type>
 void multiset<value_type>::deleteNode(Node<value_type>* node) {
@@ -211,6 +264,7 @@ multiset<value_type>::eraseNode(Node<value_type>* node, const_reference val) {
         Node<value_type>* minNodeInRightSubtree = findMinNode(node->right);
         node->value = minNodeInRightSubtree->value;
         node->count = minNodeInRightSubtree->count;
+        minNodeInRightSubtree->count = 1;  // need test
         node->right = eraseNode(node->right, minNodeInRightSubtree->value);
 
         // return node;

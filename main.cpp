@@ -67,6 +67,7 @@ int main() {
     mySet.erase(ppp);
     mySet.erase(ppp);
     mySet.erase(ppp);
+
     // mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
@@ -91,7 +92,8 @@ int main() {
     std::cout << mySet.count(400) << std::endl;
     std::cout << "---" << std::endl;
     // mySet.clear();
-    std::cout << mySet.size() << std::endl;
+    std::cout << "size:" << mySet.size() << std::endl;
+    std::cout << "---" << std::endl;
     // mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
@@ -108,6 +110,8 @@ int main() {
     // mySet.erase(ppp);
     // mySet.erase(ppp);
 
+    // s21::multiset<int> ms2;
+    // ms2 = mySet;
     for (auto it = mySet.begin(); it != mySet.end(); it++) {
         std::cout << *it << "\n";
     }
