@@ -156,7 +156,17 @@ class multiset {
     void erase(iterator pos);
     void clear();
     void swap(multiset& other);
+
+    iterator upper_bound(const_reference key);
 };
+
+template <typename value_type>
+typename multiset<value_type>::iterator 
+multiset<value_type>::upper_bound(const_reference key) {
+    iterator cur = find(key);
+    while(*cur == *(find(key))) cur++;
+    return cur;
+}
 
 template <typename value_type>
 void multiset<value_type>::swap(multiset& other) {
