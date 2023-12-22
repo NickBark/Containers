@@ -134,14 +134,6 @@ class multiset {
 
     // class MultisetConstIterator : public MultisetIterator {};
 
-    Node<value_type>* insertNode(Node<value_type>* node, const_reference val,
-                                 Node<value_type>* parent);
-    Node<value_type>* findNode(Node<value_type>* node, const_reference val);
-    Node<value_type>* eraseNode(Node<value_type>* node, const_reference val);
-    Node<value_type>* findMinNode(Node<value_type>* node);
-    void deleteNode(Node<value_type>* node);
-    void copyNode(const Node<value_type>* node);
-
    public:
     using iterator = MultisetIterator<value_type>;
     // using const_iterator = MultisetConstIterator<value_type>;
@@ -157,15 +149,67 @@ class multiset {
     void clear();
     void swap(multiset& other);
 
-    iterator upper_bound(const_reference key);
+    iterator lower_bound(const_reference key);
+    iterator upper_bound(const_reference key);  //
+   private:
+    Node<value_type>* insertNode(Node<value_type>* node, const_reference val,
+                                 Node<value_type>* parent);
+    Node<value_type>* findNode(Node<value_type>* node, const_reference val);
+    Node<value_type>* findCloseNode(Node<value_type>* node,
+                                    const_reference val);
+    Node<value_type>* eraseNode(Node<value_type>* node, const_reference val);
+    Node<value_type>* findMinNode(Node<value_type>* node);
+    Node<value_type>* findCloseMinNode(Node<value_type>* node,
+                                       const_reference key);
+    void deleteNode(Node<value_type>* node);
+    void copyNode(const Node<value_type>* node);
+    iterator last() const;
 };
 
 template <typename value_type>
-typename multiset<value_type>::iterator 
-multiset<value_type>::upper_bound(const_reference key) {
-    iterator cur = find(key);
-    while(*cur == *(find(key))) cur++;
-    return cur;
+typename multiset<value_type>::iterator multiset<value_type>::last() const {
+    Node<value_type>* cur = root;
+    while (cur->right) cur = cur->right;
+    return iterator(cur);
+}
+
+template <typename value_type>
+typename multiset<value_type>::Node<value_type>*
+multiset<value_type>::findCloseMinNode(Node<value_type>* node,
+                                       const_reference key) {
+    if (!node->left || node->left->value < key) return node;
+    return findCloseMinNode(node->left, key);
+}
+
+template <typename value_type>
+typename multiset<value_type>::Node<value_type>*
+multiset<value_type>::findCloseNode(Node<value_type>* node,
+                                    const_reference val) {
+    if (!node) return node;
+    if (node->value == val) return node;
+    if (node->value < val) {
+        node = findCloseNode(node->right, val);
+    } else {
+        node = findCloseMinNode(node, val);
+    }
+
+    return node;
+}
+
+template <typename value_type>
+typename multiset<value_type>::iterator multiset<value_type>::lower_bound(
+    const_reference key) {
+    return iterator(findCloseNode(root, key));
+    // iterator cur(findCloseNode(root, key));
+    // return *cur == key ? cur : ++cur;
+}
+
+template <typename value_type>
+typename multiset<value_type>::iterator multiset<value_type>::upper_bound(
+    const_reference key) {
+    iterator cur(findCloseNode(root, key));
+    cur = *cur == key ? ++cur : cur;
+    return cur != end() ? cur : iterator(nullptr);
 }
 
 template <typename value_type>

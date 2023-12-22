@@ -40,7 +40,7 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-    std::multiset<int> mySet;
+    s21::multiset<int> mySet;
     mySet.insert(10);
     mySet.insert(9);
     mySet.insert(20);
@@ -58,17 +58,17 @@ int main() {
     mySet.insert(300);
 
     auto ppp = mySet.find(300);
-    auto upb = mySet.upper_bound(9);
+    auto upb = mySet.lower_bound(300);
     std::cout << "upb: " << *upb << std::endl;
-    std::cout << *ppp << std::endl;
-    std::cout << "---" << std::endl;
-    mySet.erase(ppp);
-    mySet.erase(ppp);
+    // std::cout << *ppp << std::endl;
+    // std::cout << "---" << std::endl;
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
 
-    mySet.erase(ppp);
-    mySet.erase(ppp);
-    mySet.erase(ppp);
-    mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
+    // mySet.erase(ppp);
 
     // mySet.erase(ppp);
     // mySet.erase(ppp);
