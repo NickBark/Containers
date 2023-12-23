@@ -57,8 +57,12 @@ int main() {
     mySet.insert(20);
     mySet.insert(300);
 
+    std::pair<s21::multiset<int>::iterator, s21::multiset<int>::iterator> ooo;
+    ooo = mySet.equal_range(10);
+    std::cout << "equal_range: " << *(ooo.first) << " " << *(ooo.second)
+              << std::endl;
     auto ppp = mySet.find(300);
-    auto upb = mySet.lower_bound(300);
+    auto upb = mySet.upper_bound(9);
     std::cout << "upb: " << *upb << std::endl;
     // std::cout << *ppp << std::endl;
     // std::cout << "---" << std::endl;
