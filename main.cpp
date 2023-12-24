@@ -40,7 +40,7 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-    s21::multiset<int> mySet;
+    std::multiset<int> mySet;
     mySet.insert(10);
     mySet.insert(9);
     mySet.insert(20);
@@ -57,13 +57,20 @@ int main() {
     mySet.insert(20);
     mySet.insert(300);
 
-    std::pair<s21::multiset<int>::iterator, s21::multiset<int>::iterator> ooo;
-    ooo = mySet.equal_range(10);
+    std::multiset<int> ttt = {22, 44, 55, 10, 13};
+    auto itt = ttt.begin();
+    // std::cout << "ttt: " << *itTtt << std::endl;
+
+    // mySet.merge(ttt);
+
+    auto ooo = mySet.equal_range(12);
     std::cout << "equal_range: " << *(ooo.first) << " " << *(ooo.second)
               << std::endl;
     auto ppp = mySet.find(300);
-    auto upb = mySet.upper_bound(9);
-    std::cout << "upb: " << *upb << std::endl;
+    auto low = mySet.lower_bound(12);
+    auto upp = mySet.upper_bound(12);
+    std::cout << "lower: " << *low << std::endl;
+    std::cout << "upper: " << *upp << std::endl;
     // std::cout << *ppp << std::endl;
     // std::cout << "---" << std::endl;
     // mySet.erase(ppp);
