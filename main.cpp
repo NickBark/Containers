@@ -40,7 +40,7 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-    std::multiset<int> mySet;
+    s21::multiset<int> mySet;
     mySet.insert(10);
     mySet.insert(9);
     mySet.insert(20);
@@ -57,8 +57,12 @@ int main() {
     mySet.insert(20);
     mySet.insert(300);
 
-    std::multiset<int> ttt = {22, 44, 55, 10, 13};
+    s21::multiset<int> ttt = {22, 44, 55, 10, 13};
+
     auto itt = ttt.begin();
+
+    mySet.insert_many(301, 302, 303, 304, 1, 2, 3, 4);
+
     // std::cout << "ttt: " << *itTtt << std::endl;
 
     // mySet.merge(ttt);

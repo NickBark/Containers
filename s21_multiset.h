@@ -166,6 +166,9 @@ class multiset {
 
     std::pair<iterator, iterator> equal_range(const_reference key);
 
+    template <typename... Args>
+    std::vector<std::pair<iterator, bool>> insert_many(Args&&... args);
+
    private:
     Node<value_type>* insertNode(Node<value_type>* node, const_reference val,
                                  Node<value_type>* parent);
@@ -186,6 +189,14 @@ class multiset {
     void copyNode(const Node<value_type>* node);
     iterator last() const;
 };
+
+template <typename value_type>
+template <typename... Args>
+std::vector<std::pair<typename multiset<value_type>::iterator, bool>>
+multiset<value_type>::insert_many(Args&&... args) {
+    return std::vector<std::pair<iterator, bool>>(
+        {(std::make_pair(insert(std::forward<Args>(args)), true), ...)});
+}
 
 template <typename value_type>
 void multiset<value_type>::merge(multiset& other) {
