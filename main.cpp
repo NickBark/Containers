@@ -40,41 +40,47 @@ int main() {
     //     std::cout << q.front() << std::endl;
     //     q.pop();
     // }
-    s21::multiset<int> mySet;
-    mySet.insert(10);
-    mySet.insert(9);
-    mySet.insert(20);
-    mySet.insert(10);
-    mySet.insert(30);
-    mySet.insert(10);
-    mySet.insert(40);
-    mySet.insert(12);
-    mySet.insert(34);
-    mySet.insert(35);
-    mySet.insert(10);
-    mySet.insert(24);
-    mySet.insert(11);
-    mySet.insert(20);
-    mySet.insert(300);
+    s21::list<int> opa;
+    // opa.push_back(10);
+    std::cout << *opa.begin() << std::endl;
+    std::cout << *opa.end() << std::endl;
+    // std::cout << opa.back() << std::endl;
 
-    s21::multiset<int> ttt = {22, 44, 55, 10, 13};
+    // s21::multiset<int> mySet;
+    // mySet.insert(10);
+    // mySet.insert(9);
+    // mySet.insert(20);
+    // mySet.insert(10);
+    // mySet.insert(30);
+    // mySet.insert(10);
+    // mySet.insert(40);
+    // mySet.insert(12);
+    // mySet.insert(34);
+    // mySet.insert(35);
+    // mySet.insert(10);
+    // mySet.insert(24);
+    // mySet.insert(11);
+    // mySet.insert(20);
+    // mySet.insert(300);
 
-    auto itt = ttt.begin();
+    // s21::multiset<int> ttt = {22, 44, 55, 10, 13};
 
-    mySet.insert_many(301, 302, 303, 304, 1, 2, 3, 4);
+    // auto itt = ttt.begin();
+
+    // mySet.insert_many(301, 302, 303, 304, 1, 2, 3, 4);
 
     // std::cout << "ttt: " << *itTtt << std::endl;
 
     // mySet.merge(ttt);
 
-    auto ooo = mySet.equal_range(12);
-    std::cout << "equal_range: " << *(ooo.first) << " " << *(ooo.second)
-              << std::endl;
-    auto ppp = mySet.find(300);
-    auto low = mySet.lower_bound(12);
-    auto upp = mySet.upper_bound(12);
-    std::cout << "lower: " << *low << std::endl;
-    std::cout << "upper: " << *upp << std::endl;
+    // auto ooo = mySet.equal_range(12);
+    // std::cout << "equal_range: " << *(ooo.first) << " " << *(ooo.second)
+    //           << std::endl;
+    // auto ppp = mySet.find(300);
+    // auto low = mySet.lower_bound(12);
+    // auto upp = mySet.upper_bound(12);
+    // std::cout << "lower: " << *low << std::endl;
+    // std::cout << "upper: " << *upp << std::endl;
     // std::cout << *ppp << std::endl;
     // std::cout << "---" << std::endl;
     // mySet.erase(ppp);
@@ -106,11 +112,11 @@ int main() {
     // mySet.erase(ppp);
     // mySet.erase(ppp);
 
-    std::cout << mySet.count(400) << std::endl;
-    std::cout << "---" << std::endl;
-    // mySet.clear();
-    std::cout << "size:" << mySet.size() << std::endl;
-    std::cout << "---" << std::endl;
+    // std::cout << mySet.count(400) << std::endl;
+    // std::cout << "---" << std::endl;
+    // // mySet.clear();
+    // std::cout << "size:" << mySet.size() << std::endl;
+    // std::cout << "---" << std::endl;
     // mySet.erase(ppp);
     // mySet.erase(ppp);
     // mySet.erase(ppp);
@@ -129,9 +135,9 @@ int main() {
 
     // s21::multiset<int> ms2;
     // ms2 = mySet;
-    for (auto it = mySet.begin(); it != mySet.end(); it++) {
-        std::cout << *it << "\n";
-    }
+    // for (auto it = mySet.begin(); it != mySet.end(); it++) {
+    //     std::cout << *it << "\n";
+    // }
     // ppp++;
     // std::cout << *ppp << std::endl;
     // ppp++;

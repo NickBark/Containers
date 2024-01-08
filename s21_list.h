@@ -38,8 +38,14 @@ class list {
     size_type size() { return sizeOfList; }
     size_type max_size() const;
 
-    const_reference front() const { return head->data; }
-    const_reference back() const { return tail->data; }
+    const_reference front() const {
+        const value_type ret = value_type();
+        return head ? head->data : ret;
+    }
+    const_reference back() const {
+        const value_type ret = value_type();
+        return tail ? tail->data : ret;
+    }
 
     list<value_type>& operator=(list&& l);
     list<value_type>& operator=(const list& l);
@@ -184,22 +190,38 @@ class list {
     void insert_many_front(Args&&... args);
 
     const_iterator begin() const {
-        if (!head) throw std::out_of_range("The list has no elements");
+        if (!head) {
+            Node<value_type> ret;
+            return iterator(&ret);
+        }
+        // if (!head) throw std::out_of_range("The list has no elements");
         return const_iterator(head);
     }
 
     iterator begin() {
-        if (!head) throw std::out_of_range("The list has no elements");
+        if (!head) {
+            Node<value_type> ret;
+            return iterator(&ret);
+        }
+        // if (!head) throw std::out_of_range("The list has no elements");
         return iterator(head);
     }
 
     const_iterator end() const {
+        if (!head) {
+            Node<value_type> ret;
+            return iterator(&ret);
+        }
         // if (!tail) throw std::out_of_range("The list has no elements");
         return const_iterator(tail->pNext);
         // return const_iterator(nullptr);
     }
 
     iterator end() {
+        if (!head) {
+            Node<value_type> ret;
+            return iterator(&ret);
+        }
         // if (!tail) throw std::out_of_range("The list has no elements");
         return iterator(tail->pNext);
         // return iterator(nullptr);
